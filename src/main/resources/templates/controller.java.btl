@@ -1,0 +1,42 @@
+package ${package.Controller};
+
+import ${package.Service}.${table.serviceName};
+import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import ${package.Entity}.${table.entityName};
+import java.util.List;
+<% if(restControllerStyle){ %>
+import org.springframework.web.bind.annotation.RestController;
+<% }else{ %>
+import org.springframework.stereotype.Controller;
+<% } %>
+<%
+var serviceImplName=@com.baomidou.mybatisplus.core.toolkit.StringUtils.firstToLowerCase(table.serviceImplName);
+%>
+/**
+ * <p>
+ * ${table.comment!} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+<% if(restControllerStyle){ %>
+@RestController
+<% }else{ %>
+@Controller
+<% } %>
+@RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
+<% if(kotlin){ %>
+class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
+<% }else{ %>
+public class ${table.controllerName} {
+@Autowired
+    ${table.serviceName} ${serviceImplName};
+
+    @GetMapping("/queryAll")
+    public List<${table.entityName}> queryAll() {
+        return ${serviceImplName}.list();
+    }
+}
+<% } %>
