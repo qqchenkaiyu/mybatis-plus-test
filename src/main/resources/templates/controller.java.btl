@@ -33,10 +33,37 @@ class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${sup
 public class ${table.controllerName} {
 @Autowired
     ${table.serviceName} ${serviceImplName};
-
-    @GetMapping("/queryAll")
-    public List<${table.entityName}> queryAll() {
-        return ${serviceImplName}.list();
-    }
+    
+    @GetMapping
+        public ResponseEntity queryAll() {
+            return ResponseEntity.ok().body(${serviceImplName}.list());
+        }
+    
+        @GetMapping
+        public ResponseEntity query(String id) {
+            return ResponseEntity.ok().body(${serviceImplName}.getById(id));
+        }
+    
+        /**
+         * 删除
+         *
+         * @return
+         */
+        @DeleteMapping
+        public ResponseEntity delete(String id) {
+            ${serviceImplName}.removeById(id);
+            return ResponseEntity.ok().build();
+        }
+    
+        /**
+         * 新增或修改
+         *
+         * @return
+         */
+        @PostMapping
+        public ResponseEntity update(RuleConfig ruleConfig) {
+            ${serviceImplName}.saveOrUpdate(ruleConfig);
+            return ResponseEntity.ok().body(ruleConfig.getId());
+        }
 }
 <% } %>
