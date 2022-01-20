@@ -61,9 +61,9 @@ public class ${table.controllerName} {
          * @return
          */
         @PostMapping
-        public ResponseEntity update(RuleConfig ruleConfig) {
-            ${serviceImplName}.saveOrUpdate(ruleConfig);
-            return ResponseEntity.ok().body(ruleConfig.getId());
+        public ResponseEntity update(${table.entityName} obj) {
+            ${serviceImplName}.saveOrUpdate(obj);
+            return ResponseEntity.ok().body(obj.getId());
         }
 }
 <% } %>
