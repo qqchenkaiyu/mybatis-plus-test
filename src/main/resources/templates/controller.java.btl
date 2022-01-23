@@ -3,6 +3,7 @@ package ${package.Controller};
 import ${package.Service}.${table.serviceName};
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import ${package.Entity}.${table.entityName};
 import java.util.List;
 <% if(restControllerStyle){ %>
@@ -39,8 +40,8 @@ public class ${table.controllerName} {
             return ResponseEntity.ok().body(${serviceImplName}.list());
         }
     
-        @GetMapping
-        public ResponseEntity query(String id) {
+        @GetMapping("/{id}")
+            public ResponseEntity query(@PathVariable String id) {
             return ResponseEntity.ok().body(${serviceImplName}.getById(id));
         }
     
@@ -51,8 +52,7 @@ public class ${table.controllerName} {
          */
         @DeleteMapping
         public ResponseEntity delete(String id) {
-            ${serviceImplName}.removeById(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(${serviceImplName}.removeById(id));
         }
     
         /**
@@ -61,7 +61,7 @@ public class ${table.controllerName} {
          * @return
          */
         @PostMapping
-        public ResponseEntity update(${table.entityName} obj) {
+           public ResponseEntity update(@RequestBody User obj) {
             ${serviceImplName}.saveOrUpdate(obj);
             return ResponseEntity.ok().body(obj.getId());
         }

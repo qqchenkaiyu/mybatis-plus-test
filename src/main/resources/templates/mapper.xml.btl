@@ -30,5 +30,23 @@
         ${table.fieldNames}
     </sql>
 
+    <insert id="insertBatch">
+            INSERT INTO ${table.name}
+            (<include refid="Base_Column_List" />)
+            VALUES
+            <foreach collection ="list" item="${table.name}" separator =",">
+                (<%for(field in table.fields){
+                    if(field.keyFlag){
+                    print("#{"+table.name+"."+field.name+"}");
+                    }else{
+                      print(",#{"+table.name+"."+field.name+"}");
+                    }
+                    }
+                  %>)
+  </foreach >
+        </insert>
+
+
+
 <% } %>
 </mapper>

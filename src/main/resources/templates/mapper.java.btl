@@ -2,7 +2,9 @@ package ${package.Mapper};
 
 import ${package.Entity}.${entity};
 import ${superMapperClassPackage};
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 /**
  * <p>
  * ${table.comment!} Mapper 接口
@@ -15,6 +17,6 @@ import ${superMapperClassPackage};
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <% }else{ %>
 public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
-
+       int insertBatch(@Param("list") List<${entity}> list);
 }
 <% } %>
