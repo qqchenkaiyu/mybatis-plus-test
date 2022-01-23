@@ -11,6 +11,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Properties;
+
 /**
  * @Description Swagger配置文件  http://127.0.0.1:8080/swagger-ui.html
  * @Author zaomianbao
@@ -32,4 +34,5 @@ public class SpringfoxSwagger2Config {
                 .apis(RequestHandlerSelectors.basePackage("com.baomidou"))
                 .build();
     }
+
 }

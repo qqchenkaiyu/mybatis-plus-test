@@ -9,10 +9,13 @@
         <result column="name" property="name" />
         <result column="school" property="school" />
         <result column="score" property="score" />
+        <result column="deleted" property="deleted" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
     </resultMap>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, age, name, school, score
+        id, age, name, school, score, deleted, gmt_create, gmt_modified
     </sql>
 
     <insert id="insertBatch">
@@ -20,9 +23,8 @@
             (<include refid="Base_Column_List" />)
             VALUES
             <foreach collection ="list" item="user" separator =",">
-
-(#{user.id},#{user.age},#{user.name},#{user.school},#{user.score})
-            </foreach >
+                (#{user.id},#{user.age},#{user.name},#{user.school},#{user.score},#{user.deleted},#{user.gmt_create},#{user.gmt_modified})
+  </foreach >
         </insert>
 
 

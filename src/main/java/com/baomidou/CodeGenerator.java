@@ -21,7 +21,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         gc.setAuthor("chenkaiyu");
         gc.setIdType(IdType.ASSIGN_ID);
-        gc.setDateType(DateType.ONLY_DATE);
+        gc.setDateType(DateType.TIME_PACK);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
