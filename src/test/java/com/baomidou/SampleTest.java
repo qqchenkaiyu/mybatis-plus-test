@@ -3,13 +3,11 @@ package com.baomidou;
 
 import com.baomidou.ant.blog.entity.User;
 import com.baomidou.ant.blog.mapper.UserMapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Wrapper;
 import java.util.LinkedList;
 import java.util.List;
 
