@@ -22,11 +22,7 @@ var serviceImplName=@com.baomidou.mybatisplus.core.toolkit.StringUtils.firstToLo
  * @author ${author}
  * @since ${date}
  */
-<% if(restControllerStyle){ %>
 @RestController
-<% }else{ %>
-@Controller
-<% } %>
 @RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
 <% if(kotlin){ %>
 class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
@@ -34,17 +30,17 @@ class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${sup
 public class ${table.controllerName} {
 @Autowired
     ${table.serviceName} ${serviceImplName};
-    
+
     @GetMapping
         public ResponseEntity queryAll() {
             return ResponseEntity.ok().body(${serviceImplName}.list());
         }
-    
+
         @GetMapping("/{id}")
             public ResponseEntity query(@PathVariable String id) {
             return ResponseEntity.ok().body(${serviceImplName}.getById(id));
         }
-    
+
         /**
          * 删除
          *
@@ -54,16 +50,16 @@ public class ${table.controllerName} {
         public ResponseEntity delete(String id) {
             return ResponseEntity.ok().body(${serviceImplName}.removeById(id));
         }
-    
+
         /**
          * 新增或修改
          *
          * @return
          */
         @PostMapping
-           public ResponseEntity update(@RequestBody User obj) {
+           public ResponseEntity update(@RequestBody ${table.entityName} obj) {
             ${serviceImplName}.saveOrUpdate(obj);
-            return ResponseEntity.ok().body(obj.getId());
+            return ResponseEntity.ok().body(obj);
         }
 }
 <% } %>

@@ -114,10 +114,6 @@ public class AutoGenerator {
         List<TableInfo> tableList = this.getAllTableInfoList(config);
         for (TableInfo tableInfo : tableList) {
             /* ---------- 添加导入包 ---------- */
-            if (tableInfo.isConvert()) {
-                // 表注解
-                tableInfo.setImportPackages(TableName.class.getCanonicalName());
-            }
             if (config.getStrategyConfig().getLogicDeleteFieldName() != null && tableInfo.isLogicDelete(config.getStrategyConfig().getLogicDeleteFieldName())) {
                 // 逻辑删除注解
                 tableInfo.setImportPackages(TableLogic.class.getCanonicalName());
@@ -133,11 +129,7 @@ public class AutoGenerator {
                     .filter(field -> field.getPropertyName().startsWith("is")).collect(Collectors.toList());
                 tableFields.forEach(field -> {
                     //主键为is的情况基本上是不存在的.
-                    if (field.isKeyFlag()) {
-                        tableInfo.setImportPackages(TableId.class.getCanonicalName());
-                    } else {
-                        tableInfo.setImportPackages(com.baomidou.mybatisplus.annotation.TableField.class.getCanonicalName());
-                    }
+                    tableInfo.setImportPackages(com.baomidou.mybatisplus.annotation.TableField.class.getCanonicalName());
                     field.setConvert(true);
                     field.setPropertyName(StringUtils.removePrefixAfterPrefixToLower(field.getPropertyName(), 2));
                 });

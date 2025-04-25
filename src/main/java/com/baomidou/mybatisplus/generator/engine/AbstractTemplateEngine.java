@@ -81,13 +81,7 @@ public abstract class AbstractTemplateEngine {
                         writer(objectMap, templateFilePath(template.getMapper()), mapperFile);
                     }
                 }
-                // MpMapper.xml
-                if (null != tableInfo.getXmlName() && null != pathInfo.get(ConstVal.XML_PATH)) {
-                    String xmlFile = String.format((pathInfo.get(ConstVal.XML_PATH) + File.separator + tableInfo.getXmlName() + ConstVal.XML_SUFFIX), entityName);
-                    if (isCreate(FileType.XML, xmlFile)) {
-                        writer(objectMap, templateFilePath(template.getXml()), xmlFile);
-                    }
-                }
+
                 // IMpService.java
                 if (null != tableInfo.getServiceName() && null != pathInfo.get(ConstVal.SERVICE_PATH)) {
                     String serviceFile = String.format((pathInfo.get(ConstVal.SERVICE_PATH) + File.separator + tableInfo.getServiceName() + suffixJavaOrKt()), entityName);
@@ -174,9 +168,6 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("entity", tableInfo.getEntityName());
         objectMap.put("entitySerialVersionUID", config.getStrategyConfig().isEntitySerialVersionUID());
         objectMap.put("entityColumnConstant", config.getStrategyConfig().isEntityColumnConstant());
-        objectMap.put("entityBuilderModel", config.getStrategyConfig().isEntityBuilderModel());
-        objectMap.put("chainModel", config.getStrategyConfig().isChainModel());
-        objectMap.put("entityLombokModel", config.getStrategyConfig().isEntityLombokModel());
         objectMap.put("entityBooleanColumnRemoveIsPrefix", config.getStrategyConfig().isEntityBooleanColumnRemoveIsPrefix());
         objectMap.put("superMapperClassPackage", config.getSuperMapperClass());
         objectMap.put("superMapperClass", getSuperClassName(config.getSuperMapperClass()));

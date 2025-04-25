@@ -58,21 +58,7 @@ public class MySqlTypeConvert implements ITypeConvert {
         } else if (t.contains("json") || t.contains("enum")) {
             return DbColumnType.STRING;
         } else if (t.contains("date") || t.contains("time") || t.contains("year")) {
-            switch (globalConfig.getDateType()) {
-                case ONLY_DATE:
-                    return DbColumnType.DATE;
-                case SQL_PACK:
-                    switch (t) {
-                        case "date":
-                            return DbColumnType.DATE_SQL;
-                        case "time":
-                            return DbColumnType.TIME;
-                        case "year":
-                            return DbColumnType.DATE_SQL;
-                        default:
-                            return DbColumnType.TIMESTAMP;
-                    }
-                case TIME_PACK:
+
                     switch (t) {
                         case "date":
                             return DbColumnType.LOCAL_DATE;
@@ -83,7 +69,7 @@ public class MySqlTypeConvert implements ITypeConvert {
                         default:
                             return DbColumnType.LOCAL_DATE_TIME;
                     }
-            }
+
         }
         return DbColumnType.STRING;
     }

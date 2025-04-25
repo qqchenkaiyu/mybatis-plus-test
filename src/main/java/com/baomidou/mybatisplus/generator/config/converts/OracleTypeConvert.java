@@ -34,14 +34,9 @@ public class OracleTypeConvert implements ITypeConvert {
         if (t.contains("char")) {
             return DbColumnType.STRING;
         } else if (t.contains("date") || t.contains("timestamp")) {
-            switch (globalConfig.getDateType()) {
-                case ONLY_DATE:
-                    return DbColumnType.DATE;
-                case SQL_PACK:
-                    return DbColumnType.TIMESTAMP;
-                case TIME_PACK:
+
                     return DbColumnType.LOCAL_DATE_TIME;
-            }
+
         } else if (t.contains("number")) {
             if (t.matches("number\\(+\\d\\)")) {
                 return DbColumnType.INTEGER;

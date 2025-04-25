@@ -1,26 +1,20 @@
 package ${package.ServiceImpl};
 
 import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-import ${package.Service}.${table.serviceName};
-import ${superServiceImplClassPackage};
+import ${package.Mapper}.${entity}Mapper;
+import ${package.Service}.${entity}Service;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * ${table.comment!} 服务实现类
+ * ${table.comment!} 服务实现类1
  * </p>
  *
  * @author ${author}
  * @since ${date}
  */
 @Service
-<% if(kotlin){ %>
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
-
+public class ${entity}ServiceImpl extends ServiceImpl<${entity}Mapper, ${entity}> implements ${entity}Service {
 }
-<% }else{ %>
-public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
-}
-<% } %>

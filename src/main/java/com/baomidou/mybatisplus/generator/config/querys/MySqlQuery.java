@@ -75,9 +75,4 @@ public class MySqlQuery implements IDbQuery {
         return "KEY";
     }
 
-
-    @Override
-    public boolean isKeyIdentity(ResultSet results) throws SQLException {
-        return "auto_increment".equals(results.getString("Extra"));
-    }
 }

@@ -37,10 +37,6 @@ public class TableField {
 
     private boolean convert;
     private boolean keyFlag;
-    /**
-     * 主键是否为自增类型
-     */
-    private boolean keyIdentityFlag;
     private String name;
     private String type;
     private String propertyName;
@@ -116,7 +112,7 @@ public class TableField {
         }
         return firstChar.toUpperCase() + setGetName.substring(1);
     }
-    
+
     /**
      * 获取注解字段名称
      *
@@ -131,5 +127,5 @@ public class TableField {
         }
         return name;
     }
-    
+
 }

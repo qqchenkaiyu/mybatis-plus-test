@@ -6,13 +6,12 @@ import ${pkg};
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 <% } %>
-<% if(entityLombokModel){ %>
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-<% if(chainModel){ %>
 import lombok.experimental.Accessors;
-<% } %>
-<% } %>
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+
 /**
  * <p>
  * ${table.comment!}
@@ -21,20 +20,9 @@ import lombok.experimental.Accessors;
  * @author ${author}
  * @since ${date}
  */
-<% if(entityLombokModel){ %>
 @Data
-    <% if(isNotEmpty(superEntityClass)){ %>
-@EqualsAndHashCode(callSuper = true)
-    <% }else{ %>
-@EqualsAndHashCode(callSuper = false)
-    <% } %>
-    <% if(chainModel){ %>
 @Accessors(chain = true)
-    <% } %>
-<% } %>
-<% if(table.convert){ %>
 @TableName("${table.name}")
-<% } %>
 <% if(swagger2){ %>
 @ApiModel(value="${entity}对象", description="${table.comment!''}")
 <% } %>
@@ -67,13 +55,8 @@ public class ${entity} {
     <%
     /*主键*/
     %>
-        <% if(field.keyIdentityFlag){ %>
-    @TableId(value = "${field.annotationColumnName}", type = IdType.AUTO)
-        <% }else if(isNotEmpty(idType)){ %>
-    @TableId(value = "${field.annotationColumnName}", type = IdType.${idType})
-        <% }else if(field.convert){ %>
-    @TableId("${field.annotationColumnName}")
-         <% } %>
+
+    @TableId(type = IdType.${idType})
     <%
     /*普通字段*/
     %>

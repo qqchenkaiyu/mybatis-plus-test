@@ -2,36 +2,48 @@ package com.baomidou;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
-import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.zaxxer.hikari.HikariDataSource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
+import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Scanner;
+
+@Component
+@Slf4j
 public class CodeGenerator {
-    public static void main(String[] args) {
+
+    @Autowired
+    private HikariDataSource dataSource;
+
+
+    @EventListener(ApplicationReadyEvent.class)
+    public  void startGen() throws SQLException {
+        log.info("开始生成代码");
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
-
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setAuthor("chenkaiyu");
+        // 雪花算法主键
         gc.setIdType(IdType.ASSIGN_ID);
-        gc.setDateType(DateType.TIME_PACK);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/world?serverTimezone=GMT%2B8");
+        dsc.setUrl(dataSource.getJdbcUrl());
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setDriverName(dataSource.getDriverClassName());
+        dsc.setUsername(dataSource.getUsername());
+        dsc.setPassword(dataSource.getPassword());
         mpg.setDataSource(dsc);
 
         // 包配置
@@ -46,12 +58,13 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setRestControllerStyle(true);
         strategy.setLogicDeleteFieldName("deleted");
-        strategy.setTableFillList(Arrays.asList(new TableFill("gmt_create", FieldFill.INSERT),
-                new TableFill("gmt_modified", FieldFill.INSERT_UPDATE)));
-        strategy.setInclude("user");
+        strategy.setTableFillList(Arrays.asList(new TableFill("created_time", FieldFill.INSERT),
+                new TableFill("update_time", FieldFill.INSERT_UPDATE)));
+        strategy.setInclude("students");
         strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.execute();
+        log.info("结束生成代码");
     }
 
 }

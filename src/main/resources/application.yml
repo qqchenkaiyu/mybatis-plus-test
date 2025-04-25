@@ -8,6 +8,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql:///world?serverTimezone=GMT%2B8
     username: root
-    password: root
+    password: 123456
 mybatis-plus:
   mapper-locations: com/baomidou/ant/blog/mapper/xml/*

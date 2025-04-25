@@ -78,21 +78,8 @@ public class StrategyConfig {
      */
     @Deprecated
     private boolean entityBuilderModel = false;
-    
-    /**
-     * 【实体】是否为链式模型（默认 true）<br>
-     * -----------------------------------<br>
-     * public User setName(String name) { this.name = name; return this; }
-     *
-     * @since 3.3.2
-     */
-    private boolean chainModel = true;
-    
-    /**
-     * 【实体】是否为lombok模型（默认 true）<br>
-     * <a href="https://projectlombok.org/">document</a>
-     */
-    private boolean entityLombokModel = true;
+
+
     /**
      * Boolean类型字段是否移除is前缀（默认 false）<br>
      * 比如 : 数据库字段名称 : 'is_xxx',类型为 : tinyint. 在映射实体的时候则会去掉is,在实体类中映射最终结果为 xxx
@@ -150,28 +137,6 @@ public class StrategyConfig {
         this.include = include;
         return this;
     }
-    
-    /**
-     * 是否为构建者模型
-     *
-     * @return 是否为构建者模型
-     * @deprecated 3.3.2 {@link #isChainModel()}
-     */
-    @Deprecated
-    public boolean isEntityBuilderModel() {
-        return isChainModel();
-    }
-    
-    /**
-     * 设置是否为构建者模型
-     *
-     * @param entityBuilderModel 是否为构建者模型
-     * @return this
-     * @deprecated 3.3.2 {@link #setChainModel(boolean)}
-     */
-    @Deprecated
-    public StrategyConfig setEntityBuilderModel(boolean entityBuilderModel) {
-        return setChainModel(entityBuilderModel);
-    }
-    
+
+
 }

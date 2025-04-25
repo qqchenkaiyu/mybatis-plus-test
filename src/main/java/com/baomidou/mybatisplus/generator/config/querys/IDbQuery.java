@@ -30,12 +30,6 @@ public interface IDbQuery {
 
 
 
-     default boolean isKeyIdentity(ResultSet results) throws SQLException {
-        return false;
-    }
-
-
-
     default String[] fieldCustom() {
         return null;
     }

@@ -257,11 +257,7 @@ public class ConfigBuilder {
         for (TableInfo tableInfo : tableList) {
             String entityName;
             entityName = NamingStrategy.capitalFirst(processName(tableInfo.getName(), config.getNaming()));
-            tableInfo.setEntityName(strategyConfig, entityName);
-            tableInfo.setMapperName(entityName + ConstVal.MAPPER);
-            tableInfo.setXmlName(entityName + ConstVal.MAPPER);
-            tableInfo.setServiceName(entityName + ConstVal.SERVICE);
-            tableInfo.setServiceImplName(entityName + ConstVal.SERVICE_IMPL);
+            tableInfo.setEntityName(entityName);
             tableInfo.setControllerName(entityName + ConstVal.CONTROLLER);
             // 检测导入包
             checkImportPackages(tableInfo);
@@ -275,11 +271,6 @@ public class ConfigBuilder {
      * @param tableInfo ignore
      */
     private void checkImportPackages(TableInfo tableInfo) {
-        if (null != globalConfig.getIdType() && tableInfo.getFields().stream().anyMatch(TableField::isKeyFlag)) {
-            // 指定需要 IdType 场景
-            tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.IdType.class.getCanonicalName());
-            tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.TableId.class.getCanonicalName());
-        }
         if (StringUtils.isNotBlank(strategyConfig.getVersionFieldName())
                 && CollectionUtils.isNotEmpty(tableInfo.getFields())) {
             tableInfo.getFields().forEach(f -> {
@@ -380,9 +371,6 @@ public class ConfigBuilder {
                     // 处理ID
                     if (isId && !haveId) {
                         field.setKeyFlag(true);
-                        if (dbQuery.isKeyIdentity(results)) {
-                            field.setKeyIdentityFlag(true);
-                        }
                         haveId = true;
                     } else {
                         field.setKeyFlag(false);
