@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import ${package.Entity}.${Entity};
 import java.util.List;
+import com.baomidou.common.ApiResponse;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -23,13 +24,14 @@ public class ${Entity}Controller {
     ${Entity}Service ${entity}Service;
 
     @GetMapping
-        public ResponseEntity queryAll() {
-            return ResponseEntity.ok().body(${entity}Service.list());
+        public ApiResponse queryAll() {
+            return ApiResponse.success(${entity}Service.list());
         }
 
         @GetMapping("/{id}")
-            public ResponseEntity query(@PathVariable String id) {
-            return ResponseEntity.ok().body(${entity}Service.getById(id));
+            public ApiResponse query(@PathVariable String id) {
+           ${Entity}  ${entity} =  ${entity}Service.getById(id);
+           return ApiResponse.success(${entity});
         }
 
         /**
@@ -38,8 +40,9 @@ public class ${Entity}Controller {
          * @return
          */
         @DeleteMapping
-        public ResponseEntity delete(String id) {
-            return ResponseEntity.ok().body(${entity}Service.removeById(id));
+        public ApiResponse delete(String id) {
+        ${entity}Service.removeById(id);
+           return ApiResponse.success();
         }
 
         /**
@@ -47,10 +50,10 @@ public class ${Entity}Controller {
          *
          * @return
          */
-        @PostMapping
-           public ResponseEntity update(@RequestBody ${Entity} obj) {
+           @PostMapping
+           public ApiResponse update(@RequestBody ${Entity} obj) {
             ${entity}Service.saveOrUpdate(obj);
-            return ResponseEntity.ok().body(obj);
+            return ApiResponse.success(obj);
         }
 }
 
