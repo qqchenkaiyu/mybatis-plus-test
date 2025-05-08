@@ -1,19 +1,13 @@
 package ${package.Controller};
 
-import ${package.Service}.${table.serviceName};
+import ${package.Service}.${Entity}Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import ${package.Entity}.${table.entityName};
+import ${package.Entity}.${Entity};
 import java.util.List;
-<% if(restControllerStyle){ %>
 import org.springframework.web.bind.annotation.RestController;
-<% }else{ %>
-import org.springframework.stereotype.Controller;
-<% } %>
-<%
-var serviceImplName=@com.baomidou.mybatisplus.core.toolkit.StringUtils.firstToLowerCase(table.serviceImplName);
-%>
+
 /**
  * <p>
  * ${table.comment!} 前端控制器
@@ -23,22 +17,19 @@ var serviceImplName=@com.baomidou.mybatisplus.core.toolkit.StringUtils.firstToLo
  * @since ${date}
  */
 @RestController
-@RequestMapping("<% if(isNotEmpty(package.ModuleName)){ %>/${package.ModuleName}<% } %>/<% if(isNotEmpty(controllerMappingHyphenStyle)){ %>${controllerMappingHyphen}<% }else{ %>${table.entityPath}<% } %>")
-<% if(kotlin){ %>
-class ${table.controllerName}<% if(isNotEmpty(superControllerClass)){ %> : ${superControllerClass}()<% } %>
-<% }else{ %>
-public class ${table.controllerName} {
-@Autowired
-    ${table.serviceName} ${serviceImplName};
+@RequestMapping("/${entity}")
+public class ${Entity}Controller {
+    @Autowired
+    ${Entity}Service ${entity}Service;
 
     @GetMapping
         public ResponseEntity queryAll() {
-            return ResponseEntity.ok().body(${serviceImplName}.list());
+            return ResponseEntity.ok().body(${entity}Service.list());
         }
 
         @GetMapping("/{id}")
             public ResponseEntity query(@PathVariable String id) {
-            return ResponseEntity.ok().body(${serviceImplName}.getById(id));
+            return ResponseEntity.ok().body(${entity}Service.getById(id));
         }
 
         /**
@@ -48,7 +39,7 @@ public class ${table.controllerName} {
          */
         @DeleteMapping
         public ResponseEntity delete(String id) {
-            return ResponseEntity.ok().body(${serviceImplName}.removeById(id));
+            return ResponseEntity.ok().body(${entity}Service.removeById(id));
         }
 
         /**
@@ -57,9 +48,9 @@ public class ${table.controllerName} {
          * @return
          */
         @PostMapping
-           public ResponseEntity update(@RequestBody ${table.entityName} obj) {
-            ${serviceImplName}.saveOrUpdate(obj);
+           public ResponseEntity update(@RequestBody ${Entity} obj) {
+            ${entity}Service.saveOrUpdate(obj);
             return ResponseEntity.ok().body(obj);
         }
 }
-<% } %>
+

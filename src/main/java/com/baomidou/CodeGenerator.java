@@ -61,7 +61,6 @@ public class CodeGenerator {
         strategy.setTableFillList(Arrays.asList(new TableFill("created_time", FieldFill.INSERT),
                 new TableFill("update_time", FieldFill.INSERT_UPDATE)));
         strategy.setInclude("students");
-        strategy.setControllerMappingHyphenStyle(true);
         mpg.setStrategy(strategy);
         mpg.execute();
         log.info("结束生成代码");

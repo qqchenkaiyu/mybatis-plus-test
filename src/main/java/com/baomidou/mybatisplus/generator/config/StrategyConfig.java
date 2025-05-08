@@ -93,13 +93,6 @@ public class StrategyConfig {
      */
     private boolean restControllerStyle = false;
     /**
-     * 驼峰转连字符
-     * <pre>
-     *      <code>@RequestMapping("/managerUserActionHistory")</code> -> <code>@RequestMapping("/manager-user-action-history")</code>
-     * </pre>
-     */
-    private boolean controllerMappingHyphenStyle = false;
-    /**
      * 是否生成实体时，生成字段注解
      */
     private boolean entityTableFieldAnnotationEnable = false;

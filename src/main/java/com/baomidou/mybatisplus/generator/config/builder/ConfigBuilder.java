@@ -258,7 +258,6 @@ public class ConfigBuilder {
             String entityName;
             entityName = NamingStrategy.capitalFirst(processName(tableInfo.getName(), config.getNaming()));
             tableInfo.setEntityName(entityName);
-            tableInfo.setControllerName(entityName + ConstVal.CONTROLLER);
             // 检测导入包
             checkImportPackages(tableInfo);
         }

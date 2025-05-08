@@ -27,9 +27,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 @ApiModel(value="${entity}对象", description="${table.comment!''}")
 <% } %>
 <% if(isNotEmpty(superEntityClass)){ %>
-public class ${entity} extends ${superEntityClass}<% if(activeRecord){ %><${entity}><%}%>{
+public class ${Entity} extends ${superEntityClass}<% if(activeRecord){ %><${Entity}><%}%>{
 <% }else{ %>
-public class ${entity} {
+public class ${Entity} {
 <% } %>
 
 <% if(entitySerialVersionUID){ %>

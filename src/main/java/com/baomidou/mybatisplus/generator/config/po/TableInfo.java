@@ -42,17 +42,9 @@ public class TableInfo {
     private String name;
     private String comment;
     private String entityName;
-    private String mapperName;
-    private String serviceName;
-    private String serviceImplName;
-    private String controllerName;
     private List<TableField> fields;
 
     private String fieldNames="";
-
-    public String getEntityPath() {
-        return entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
-    }
 
     public TableInfo setEntityName( String entityName) {
         this.entityName = entityName;

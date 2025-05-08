@@ -75,30 +75,36 @@ public abstract class AbstractTemplateEngine {
                     }
                 }
                 // MpMapper.java
-                if (null != tableInfo.getMapperName() && null != pathInfo.get(ConstVal.MAPPER_PATH)) {
-                    String mapperFile = String.format((pathInfo.get(ConstVal.MAPPER_PATH) + File.separator + tableInfo.getMapperName() + suffixJavaOrKt()), entityName);
+                if ( null != pathInfo.get(ConstVal.MAPPER_PATH)) {
+                    String mapperFile =
+                            String.format((pathInfo.get(ConstVal.MAPPER_PATH) + File.separator + entityName+"Mapper" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.MAPPER, mapperFile)) {
                         writer(objectMap, templateFilePath(template.getMapper()), mapperFile);
                     }
                 }
 
                 // IMpService.java
-                if (null != tableInfo.getServiceName() && null != pathInfo.get(ConstVal.SERVICE_PATH)) {
-                    String serviceFile = String.format((pathInfo.get(ConstVal.SERVICE_PATH) + File.separator + tableInfo.getServiceName() + suffixJavaOrKt()), entityName);
+                if (null != pathInfo.get(ConstVal.SERVICE_PATH)) {
+                    String serviceFile =
+                            String.format((pathInfo.get(ConstVal.SERVICE_PATH) + File.separator +  entityName+
+                                    "Service" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.SERVICE, serviceFile)) {
                         writer(objectMap, templateFilePath(template.getService()), serviceFile);
                     }
                 }
                 // MpServiceImpl.java
-                if (null != tableInfo.getServiceImplName() && null != pathInfo.get(ConstVal.SERVICE_IMPL_PATH)) {
-                    String implFile = String.format((pathInfo.get(ConstVal.SERVICE_IMPL_PATH) + File.separator + tableInfo.getServiceImplName() + suffixJavaOrKt()), entityName);
+                if ( null != pathInfo.get(ConstVal.SERVICE_IMPL_PATH)) {
+                    String implFile =
+                            String.format((pathInfo.get(ConstVal.SERVICE_IMPL_PATH) + File.separator + entityName+
+                                    "ServiceImpl" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.SERVICE_IMPL, implFile)) {
                         writer(objectMap, templateFilePath(template.getServiceImpl()), implFile);
                     }
                 }
                 // MpController.java
-                if (null != tableInfo.getControllerName() && null != pathInfo.get(ConstVal.CONTROLLER_PATH)) {
-                    String controllerFile = String.format((pathInfo.get(ConstVal.CONTROLLER_PATH) + File.separator + tableInfo.getControllerName() + suffixJavaOrKt()), entityName);
+                if (null != pathInfo.get(ConstVal.CONTROLLER_PATH)) {
+                    String controllerFile = String.format((pathInfo.get(ConstVal.CONTROLLER_PATH) + File.separator + entityName+
+                            "Controller" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.CONTROLLER, controllerFile)) {
                         writer(objectMap, templateFilePath(template.getController()), controllerFile);
                     }
@@ -146,11 +152,6 @@ public abstract class AbstractTemplateEngine {
     public Map<String, Object> getObjectMap(TableInfo tableInfo) {
         Map<String, Object> objectMap = new HashMap<>(30);
         ConfigBuilder config = getConfigBuilder();
-        if (config.getStrategyConfig().isControllerMappingHyphenStyle()) {
-            objectMap.put("controllerMappingHyphenStyle", config.getStrategyConfig().isControllerMappingHyphenStyle());
-            objectMap.put("controllerMappingHyphen", StringUtils.camelToHyphen(tableInfo.getEntityPath()));
-        }
-        objectMap.put("restControllerStyle", config.getStrategyConfig().isRestControllerStyle());
         objectMap.put("config", config);
         objectMap.put("package", config.getPackageInfo());
         GlobalConfig globalConfig = config.getGlobalConfig();
@@ -165,7 +166,8 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("enableCache", globalConfig.isEnableCache());
         objectMap.put("baseResultMap", globalConfig.isBaseResultMap());
         objectMap.put("baseColumnList", globalConfig.isBaseColumnList());
-        objectMap.put("entity", tableInfo.getEntityName());
+        objectMap.put("Entity", tableInfo.getEntityName());
+        objectMap.put("entity", StringUtils.firstToLowerCase(tableInfo.getEntityName()));
         objectMap.put("entitySerialVersionUID", config.getStrategyConfig().isEntitySerialVersionUID());
         objectMap.put("entityColumnConstant", config.getStrategyConfig().isEntityColumnConstant());
         objectMap.put("entityBooleanColumnRemoveIsPrefix", config.getStrategyConfig().isEntityBooleanColumnRemoveIsPrefix());
