@@ -3,6 +3,7 @@ package ${package.Controller};
 import ${package.Service}.${Entity}Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.http.ResponseEntity;
 import ${package.Entity}.${Entity};
 import java.util.List;
@@ -24,36 +25,47 @@ public class ${Entity}Controller {
     ${Entity}Service ${entity}Service;
 
     @GetMapping
-        public ApiResponse queryAll() {
-            return ApiResponse.success(${entity}Service.list());
-        }
+    public ApiResponse queryAll(${Entity} obj,
+                                @RequestParam(defaultValue = "1") int pageNum,
+                                @RequestParam(defaultValue = "10") int pageSize) {
 
-        @GetMapping("/{id}")
-            public ApiResponse query(@PathVariable String id) {
-           ${Entity}  ${entity} =  ${entity}Service.getById(id);
-           return ApiResponse.success(${entity});
-        }
+        // 构建分页对象
+        IPage<${Entity}> page = new Page<>(pageNum, pageSize);
 
-        /**
-         * 删除
-         *
-         * @return
-         */
-        @DeleteMapping
-        public ApiResponse delete(String id) {
+        // 使用 QueryWrapper 自动构建 eq 条件
+        QueryWrapper<${Entity}> queryWrapper = new QueryWrapper<>(obj);
+
+        // 执行分页查询
+        IPage<${Entity}> resultPage = ${entity}Service.page(page, queryWrapper);
+
+        return ApiResponse.success(resultPage);
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse query(@PathVariable String id) {
+        ${Entity} ${entity} = ${entity}Service.getById(id);
+        return ApiResponse.success(${entity});
+    }
+
+    /**
+     * 删除
+     *
+     * @return
+     */
+    @DeleteMapping
+    public ApiResponse delete(String id) {
         ${entity}Service.removeById(id);
-           return ApiResponse.success();
-        }
+        return ApiResponse.success();
+    }
 
-        /**
-         * 新增或修改
-         *
-         * @return
-         */
-           @PostMapping
-           public ApiResponse update(@RequestBody ${Entity} obj) {
-            ${entity}Service.saveOrUpdate(obj);
-            return ApiResponse.success(obj);
-        }
+    /**
+     * 新增或修改
+     *
+     * @return
+     */
+    @PostMapping
+    public ApiResponse update(@RequestBody ${Entity} obj) {
+        ${entity}Service.saveOrUpdate(obj);
+        return ApiResponse.success(obj);
+    }
 }
-
