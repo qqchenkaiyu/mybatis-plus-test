@@ -58,8 +58,8 @@ public class ${Entity}Controller {
     @DeleteMapping
     @ApiOperation(value = "删除数据")
     public ApiResponse delete(String id) {
-        ${entity}Service.removeById(id);
-        return ApiResponse.success();
+     boolean success =   ${entity}Service.removeById(id);
+       return ApiResponse.data(success);
     }
 
     /**
@@ -69,7 +69,7 @@ public class ${Entity}Controller {
      */
     @PostMapping
     public ApiResponse update(@RequestBody ${Entity} obj) {
-        ${entity}Service.saveOrUpdate(obj);
-        return ApiResponse.success(obj);
+        boolean success = ${entity}Service.saveOrUpdate(obj);
+        return ApiResponse.data(success);
     }
 }
