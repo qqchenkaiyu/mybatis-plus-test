@@ -2,6 +2,7 @@ package ${package.Controller};
 
 import ${package.Service}.${Entity}Service;
 import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.http.ResponseEntity;

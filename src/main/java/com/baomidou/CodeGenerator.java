@@ -1,5 +1,6 @@
 package com.baomidou;
 
+import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -13,6 +14,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.Arrays;
 
@@ -24,9 +26,20 @@ public class CodeGenerator {
     private HikariDataSource dataSource;
 
 
-//    @EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     public  void startGen() throws SQLException {
         log.info("开始生成代码");
+        // 如果ant/blog/controller 文件夹路径下有文件，则不生成
+        boolean needStart = false;
+        try {
+            Class<?> aClass = Class.forName("com.baomidou.ant.blog.controller.StudentsController");
+        } catch (ClassNotFoundException e) {
+            needStart = true;
+        }
+        if (!needStart){
+            log.info("ant/blog/controller 文件夹路径下有文件，则不生成");
+            return;
+        }
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
