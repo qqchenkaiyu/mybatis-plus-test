@@ -24,7 +24,7 @@ public class CodeGenerator {
     private HikariDataSource dataSource;
 
 
-    @EventListener(ApplicationReadyEvent.class)
+//    @EventListener(ApplicationReadyEvent.class)
     public  void startGen() throws SQLException {
         log.info("开始生成代码");
         // 代码生成器

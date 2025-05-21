@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.http.ResponseEntity;
 import ${package.Entity}.${Entity};
 import java.util.List;
+import com.baomidou.common.LogRequest;
 import com.baomidou.common.ApiResponse;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/${entity}")
+@LogRequest
 public class ${Entity}Controller {
     @Autowired
     ${Entity}Service ${entity}Service;
@@ -42,6 +44,7 @@ public class ${Entity}Controller {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "查询数据")
     public ApiResponse query(@PathVariable String id) {
         ${Entity} ${entity} = ${entity}Service.getById(id);
         return ApiResponse.success(${entity});
@@ -53,6 +56,7 @@ public class ${Entity}Controller {
      * @return
      */
     @DeleteMapping
+    @ApiOperation(value = "删除数据")
     public ApiResponse delete(String id) {
         ${entity}Service.removeById(id);
         return ApiResponse.success();
