@@ -32,6 +32,6 @@ public class ${Entity} {
     <% if(field.keyFlag){ %>
     @TableId(type = IdType.ASSIGN_ID)
     <% } %>
-    private ${field.propertyType} ${field.propertyName};
+    private ${field.columnType.type} ${field.propertyName};
 <% } %>
 }

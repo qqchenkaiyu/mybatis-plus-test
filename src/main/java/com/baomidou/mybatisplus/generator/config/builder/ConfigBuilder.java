@@ -120,8 +120,6 @@ public class ConfigBuilder {
     private List<TableInfo> getTablesInfo() {
         //所有的表信息
         List<TableInfo> tableList = new ArrayList<>();
-        //不存在的表名
-        Set<String> notExistTables = Arrays.stream(globalConfig.getInclude()).collect(Collectors.toSet());
         try {
             //根据不同数据库类型得到不同表查询sql
             StringBuilder sql = new StringBuilder(dataSourceConfig.getDbQuery().tablesSql(dataSourceConfig));
@@ -133,20 +131,11 @@ public class ConfigBuilder {
                         TableInfo tableInfo = new TableInfo();
                         tableInfo.setName(tableName);
                         tableInfo.setComment(results.getString(dataSourceConfig.getDbQuery().tableComment()));
-                        for (String includeTable : globalConfig.getInclude()) {
-                            // 忽略大小写等于 或 正则 true
-                            if (tableNameMatches(includeTable, tableName)) {
-                                tableList.add(tableInfo);
-                                notExistTables.remove(tableInfo.getName());
-                            }
-                        }
+                        tableList.add(tableInfo);
                     } else {
                         System.err.println("当前数据库为空！！！");
                     }
                 }
-            }
-            if (notExistTables.size() > 0) {
-                System.err.println("表 " + notExistTables + " 在数据库中不存在！！！");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -166,7 +155,7 @@ public class ConfigBuilder {
      * @return ignore
      */
     private boolean tableNameMatches(String setTableName, String dbTableName) {
-        return setTableName.equalsIgnoreCase(dbTableName);
+        return setTableName.equals("*")||setTableName.equalsIgnoreCase(dbTableName);
     }
 
     /**

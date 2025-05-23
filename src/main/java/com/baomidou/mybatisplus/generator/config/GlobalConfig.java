@@ -31,7 +31,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class GlobalConfig {
     private String parent = "";
-    private String[] include = null;
     /**
      * 生成文件的输出目录【默认 D 盘根目录】
      */

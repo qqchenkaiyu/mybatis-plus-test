@@ -40,7 +40,6 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         gc.setAuthor("chenkaiyu");
         gc.setParent("com.baomidou.ant.blog");
-        gc.setInclude(new String[]{"students"});
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
