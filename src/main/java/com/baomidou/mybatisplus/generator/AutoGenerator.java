@@ -84,48 +84,12 @@ public class AutoGenerator {
         logger.debug("==========================准备生成文件...==========================");
         // 初始化配置
         if (null == config) {
-            config = new ConfigBuilder(packageInfo, dataSource, strategy, template, globalConfig);
+            config = new ConfigBuilder(packageInfo, dataSource, strategy , globalConfig);
         }
         // 模板引擎初始化执行文件输出
-        templateEngine.init(this.pretreatmentConfigBuilder(config)).mkdirs().batchOutput();
+        templateEngine.init(config).mkdirs().batchOutput();
         logger.debug("==========================文件生成完成！！！==========================");
     }
 
-    /**
-     * 开放表信息、预留子类重写
-     *
-     * @param config 配置信息
-     * @return ignore
-     */
-    protected List<TableInfo> getAllTableInfoList(ConfigBuilder config) {
-        return config.getTableInfoList();
-    }
-
-    /**
-     * 预处理配置
-     *
-     * @param config 总配置信息
-     * @return 解析数据结果集
-     */
-    protected ConfigBuilder pretreatmentConfigBuilder(ConfigBuilder config) {
-        /*
-         * 表信息列表
-         */
-        List<TableInfo> tableList = this.getAllTableInfoList(config);
-        for (TableInfo tableInfo : tableList) {
-            // Boolean类型is前缀处理
-            if (config.getStrategyConfig().isEntityBooleanColumnRemoveIsPrefix()
-                && CollectionUtils.isNotEmpty(tableInfo.getFields())) {
-                List<TableField> tableFields = tableInfo.getFields().stream().filter(field -> "boolean".equalsIgnoreCase(field.getPropertyType()))
-                    .filter(field -> field.getPropertyName().startsWith("is")).collect(Collectors.toList());
-                tableFields.forEach(field -> {
-                    //主键为is的情况基本上是不存在的.
-                    field.setConvert(true);
-                    field.setPropertyName(StringUtils.removePrefixAfterPrefixToLower(field.getPropertyName(), 2));
-                });
-            }
-        }
-        return config.setTableInfoList(tableList);
-    }
 
 }

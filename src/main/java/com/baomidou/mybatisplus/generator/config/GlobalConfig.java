@@ -46,24 +46,9 @@ public class GlobalConfig {
      */
     private boolean open = false;
 
-    /**
-     * 是否在xml中添加二级缓存配置
-     */
-    private boolean enableCache = false;
 
     /**
      * 开发人员
      */
     private String author;
-
-
-    /**
-     * 开启 BaseResultMap
-     */
-    private boolean baseResultMap = true;
-
-    /**
-     * 开启 baseColumnList
-     */
-    private boolean baseColumnList = true;
 }

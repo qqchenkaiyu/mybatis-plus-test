@@ -60,13 +60,6 @@ public class ConfigBuilder {
      */
     private IDbQuery dbQuery;
     private DbType dbType;
-    private String  superMapperClass = ConstVal.SUPER_MAPPER_CLASS;
-    /**
-     * service超类定义
-     */
-    private String superServiceClass = ConstVal.SUPER_SERVICE_CLASS;
-
-    private String superServiceImplClass = ConstVal.SUPER_SERVICE_IMPL_CLASS;
     /**
      * 数据库表信息
      */
@@ -104,7 +97,7 @@ public class ConfigBuilder {
      * @param globalConfig     全局配置
      */
     public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
-                         TemplateConfig template, GlobalConfig globalConfig) {
+                          GlobalConfig globalConfig) {
         // 全局配置
         if (null != globalConfig)
             this.globalConfig = globalConfig;
@@ -147,26 +140,6 @@ public class ConfigBuilder {
     }
 
 
-
-
-    public String getSuperMapperClass() {
-        return superMapperClass;
-    }
-
-
-    /**
-     * 获取超类定义
-     *
-     * @return 完整超类名称
-     */
-    public String getSuperServiceClass() {
-        return superServiceClass;
-    }
-
-
-    public String getSuperServiceImplClass() {
-        return superServiceImplClass;
-    }
 
 
     /**
@@ -424,17 +397,6 @@ public class ConfigBuilder {
             propertyName = name;
         }
         return propertyName;
-    }
-
-
-    public StrategyConfig getStrategyConfig() {
-        return strategyConfig;
-    }
-
-
-    public ConfigBuilder setStrategyConfig(StrategyConfig strategyConfig) {
-        this.strategyConfig = strategyConfig;
-        return this;
     }
 
 

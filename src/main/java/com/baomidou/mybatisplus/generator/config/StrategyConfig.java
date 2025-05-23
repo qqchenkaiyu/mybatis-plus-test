@@ -78,13 +78,6 @@ public class StrategyConfig {
      */
     @Deprecated
     private boolean entityBuilderModel = false;
-
-
-    /**
-     * Boolean类型字段是否移除is前缀（默认 false）<br>
-     * 比如 : 数据库字段名称 : 'is_xxx',类型为 : tinyint. 在映射实体的时候则会去掉is,在实体类中映射最终结果为 xxx
-     */
-    private boolean entityBooleanColumnRemoveIsPrefix = false;
     /**
      * 生成 <code>@RestController</code> 控制器
      * <pre>

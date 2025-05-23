@@ -158,20 +158,8 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("author", globalConfig.getAuthor());
         objectMap.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         objectMap.put("table", tableInfo);
-        objectMap.put("enableCache", globalConfig.isEnableCache());
-        objectMap.put("baseResultMap", globalConfig.isBaseResultMap());
-        objectMap.put("baseColumnList", globalConfig.isBaseColumnList());
         objectMap.put("Entity", tableInfo.getEntityName());
         objectMap.put("entity", StringUtils.firstToLowerCase(tableInfo.getEntityName()));
-        objectMap.put("entitySerialVersionUID", config.getStrategyConfig().isEntitySerialVersionUID());
-        objectMap.put("entityColumnConstant", config.getStrategyConfig().isEntityColumnConstant());
-        objectMap.put("entityBooleanColumnRemoveIsPrefix", config.getStrategyConfig().isEntityBooleanColumnRemoveIsPrefix());
-        objectMap.put("superMapperClassPackage", config.getSuperMapperClass());
-        objectMap.put("superMapperClass", getSuperClassName(config.getSuperMapperClass()));
-        objectMap.put("superServiceClassPackage", config.getSuperServiceClass());
-        objectMap.put("superServiceClass", getSuperClassName(config.getSuperServiceClass()));
-        objectMap.put("superServiceImplClassPackage", config.getSuperServiceImplClass());
-        objectMap.put("superServiceImplClass", getSuperClassName(config.getSuperServiceImplClass()));
         return objectMap;
     }
 
