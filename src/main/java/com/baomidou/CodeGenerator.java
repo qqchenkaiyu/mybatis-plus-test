@@ -40,6 +40,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         gc.setAuthor("chenkaiyu");
         gc.setParent("com.baomidou.ant.blog");
+        gc.setInclude(new String[]{"students"});
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -52,10 +53,6 @@ public class CodeGenerator {
         mpg.setDataSource(dsc);
 
 
-        // 策略配置
-        StrategyConfig strategy = new StrategyConfig();
-        strategy.setInclude("students");
-        mpg.setStrategy(strategy);
         mpg.execute();
         log.info("结束生成代码");
     }

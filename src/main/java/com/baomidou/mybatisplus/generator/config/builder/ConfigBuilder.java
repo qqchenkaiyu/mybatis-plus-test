@@ -53,10 +53,7 @@ public class ConfigBuilder {
      * 路径配置信息
      */
     private Map<String, String> pathInfo;
-    /**
-     * 策略配置
-     */
-    private StrategyConfig strategyConfig;
+
     /**
      * 全局配置信息
      */
@@ -70,15 +67,14 @@ public class ConfigBuilder {
      * @param strategyConfig   表配置
      * @param globalConfig     全局配置
      */
-    public ConfigBuilder(DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig, GlobalConfig globalConfig) {
+    public ConfigBuilder(DataSourceConfig dataSourceConfig, GlobalConfig globalConfig) {
         // 全局配置
         if (null != globalConfig)
             this.globalConfig = globalConfig;
         // 包配置
         pathInfo = PathInfoUtils.buildPathInfo(this.globalConfig);
         this.dataSourceConfig = dataSourceConfig;
-        this.strategyConfig = strategyConfig;
-        tableInfoList = getTablesInfo(this.strategyConfig);
+        tableInfoList = getTablesInfo();
     }
 
 
@@ -122,11 +118,11 @@ public class ConfigBuilder {
     /**
      * 获取所有的数据库表信息
      */
-    private List<TableInfo> getTablesInfo(StrategyConfig config) {
+    private List<TableInfo> getTablesInfo() {
         //所有的表信息
         List<TableInfo> tableList = new ArrayList<>();
         //不存在的表名
-        Set<String> notExistTables = Arrays.stream(config.getInclude()).collect(Collectors.toSet());
+        Set<String> notExistTables = Arrays.stream(globalConfig.getInclude()).collect(Collectors.toSet());
         try {
             //根据不同数据库类型得到不同表查询sql
             StringBuilder sql = new StringBuilder(dataSourceConfig.getDbQuery().tablesSql(dataSourceConfig));
@@ -138,7 +134,7 @@ public class ConfigBuilder {
                         TableInfo tableInfo = new TableInfo();
                         tableInfo.setName(tableName);
                         tableInfo.setComment(results.getString(dataSourceConfig.getDbQuery().tableComment()));
-                        for (String includeTable : config.getInclude()) {
+                        for (String includeTable : globalConfig.getInclude()) {
                             // 忽略大小写等于 或 正则 true
                             if (tableNameMatches(includeTable, tableName)) {
                                 tableList.add(tableInfo);
@@ -226,29 +222,6 @@ public class ConfigBuilder {
         tableInfo.setFields(fieldList);
         return tableInfo;
     }
-
-
-    /**
-     * 连接路径字符串
-     *
-     * @param parentDir   路径常量字符串
-     * @param packageName 包名
-     * @return 连接后的路径
-     */
-    private String joinPath(String parentDir, String packageName) {
-        if (StringUtils.isBlank(parentDir)) {
-            parentDir = System.getProperty(ConstVal.JAVA_TMPDIR);
-        }
-        if (!StringUtils.endsWith(parentDir, File.separator)) {
-            parentDir += File.separator;
-        }
-        packageName = packageName.replaceAll("\\.", StringPool.BACK_SLASH + File.separator);
-        return parentDir + packageName;
-    }
-
-
-
-
 
     public GlobalConfig getGlobalConfig() {
         return globalConfig;

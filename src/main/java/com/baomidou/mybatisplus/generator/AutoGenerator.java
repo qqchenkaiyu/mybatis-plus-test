@@ -56,10 +56,7 @@ public class AutoGenerator {
      * 数据源配置
      */
     private DataSourceConfig dataSource;
-    /**
-     * 数据库表配置
-     */
-    private StrategyConfig strategy;
+
 
     /**
      * 全局 相关配置
@@ -77,7 +74,7 @@ public class AutoGenerator {
         logger.debug("==========================准备生成文件...==========================");
         // 初始化配置
         if (null == config) {
-            config = new ConfigBuilder( dataSource, strategy , globalConfig);
+            config = new ConfigBuilder( dataSource , globalConfig);
         }
         // 模板引擎初始化执行文件输出
         templateEngine.init(config).mkdirs().batchOutput();
