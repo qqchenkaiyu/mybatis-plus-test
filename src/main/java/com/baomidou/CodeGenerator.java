@@ -39,6 +39,7 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setAuthor("chenkaiyu");
+        gc.setParent("com.baomidou.ant.blog");
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -50,11 +51,6 @@ public class CodeGenerator {
         dsc.setPassword(dataSource.getPassword());
         mpg.setDataSource(dsc);
 
-        // 包配置
-        PackageConfig pc = new PackageConfig();
-        pc.setModuleName("blog");
-        pc.setParent("com.baomidou.ant");
-        mpg.setPackageInfo(pc);
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();

@@ -58,14 +58,12 @@ public class ConfigBuilder {
      */
     private IDbQuery dbQuery;
     private DbType dbType;
+
+    private String parent = "";
     /**
      * 数据库表信息
      */
     private List<TableInfo> tableInfoList;
-    /**
-     * 包配置详情
-     */
-    private Map<String, String> packageInfo;
     /**
      * 路径配置信息
      */
@@ -81,30 +79,19 @@ public class ConfigBuilder {
 
 
     /**
-     * 过滤正则
-     */
-    private static final Pattern REGX = Pattern.compile("[~!/@#$%^&*()-_=+\\\\|[{}];:\\'\\\",<.>/?]+");
-
-    /**
      * 在构造器中处理配置
      *
-     * @param packageConfig    包配置
      * @param dataSourceConfig 数据源配置
      * @param strategyConfig   表配置
-     * @param template         模板配置
      * @param globalConfig     全局配置
      */
-    public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
+    public ConfigBuilder( DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
                           GlobalConfig globalConfig) {
         // 全局配置
         if (null != globalConfig)
             this.globalConfig = globalConfig;
         // 包配置
-        if (null == packageConfig) {
-            handlerPackage(this.template, this.globalConfig, new PackageConfig());
-        } else {
-            handlerPackage(this.template, this.globalConfig, packageConfig);
-        }
+        pathInfo = PathInfoUtils.buildPathInfo(this.globalConfig);
         this.dataSourceConfig = dataSourceConfig;
         handlerDataSource(dataSourceConfig);
         // 策略配置
@@ -114,17 +101,6 @@ public class ConfigBuilder {
             this.strategyConfig = strategyConfig;
         }
         tableInfoList = getTablesInfo(this.strategyConfig);
-    }
-
-    // ************************ 曝露方法 BEGIN*****************************
-
-    /**
-     * 所有包配置信息
-     *
-     * @return 包配置
-     */
-    public Map<String, String> getPackageInfo() {
-        return packageInfo;
     }
 
 
@@ -149,12 +125,6 @@ public class ConfigBuilder {
         return tableInfoList;
     }
 
-    public ConfigBuilder setTableInfoList(List<TableInfo> tableInfoList) {
-        this.tableInfoList = tableInfoList;
-        return this;
-    }
-
-
     /**
      * 模板路径配置信息
      *
@@ -162,47 +132,6 @@ public class ConfigBuilder {
      */
     public TemplateConfig getTemplate() {
         return template == null ? new TemplateConfig() : template;
-    }
-
-    // ****************************** 曝露方法 END**********************************
-
-    /**
-     * 处理包配置
-     *  @param template  TemplateConfig
-     * @param globalConfig
-     * @param config    PackageConfig
-     */
-    private void handlerPackage(TemplateConfig template, GlobalConfig globalConfig, PackageConfig config) {
-        // 包信息
-        packageInfo = new HashMap<>(10);
-        packageInfo.put(ConstVal.MODULE_NAME, config.getModuleName());
-        packageInfo.put(ConstVal.ENTITY, joinPackage(config.getParent(), config.getEntity()));
-        packageInfo.put(ConstVal.MAPPER, joinPackage(config.getParent(), config.getMapper()));
-        packageInfo.put(ConstVal.XML, joinPackage(config.getParent(), config.getXml()));
-        packageInfo.put(ConstVal.SERVICE, joinPackage(config.getParent(), config.getService()));
-        packageInfo.put(ConstVal.SERVICE_IMPL, joinPackage(config.getParent(), config.getServiceImpl()));
-        packageInfo.put(ConstVal.CONTROLLER, joinPackage(config.getParent(), config.getController()));
-
-        // 自定义路径
-        Map<String, String> configPathInfo = config.getPathInfo();
-        if (null != configPathInfo) {
-            pathInfo = configPathInfo;
-        } else {
-            // 生成路径信息
-            pathInfo = new HashMap<>(10);
-            setPathInfo(pathInfo, template.getEntity(), globalConfig.getJavaOutputDir(), ConstVal.ENTITY_PATH, ConstVal.ENTITY);
-            setPathInfo(pathInfo, template.getMapper(), globalConfig.getJavaOutputDir(), ConstVal.MAPPER_PATH, ConstVal.MAPPER);
-            setPathInfo(pathInfo, template.getXml(), globalConfig.getResourceOutputDir(), ConstVal.XML_PATH, ConstVal.XML);
-            setPathInfo(pathInfo, template.getService(), globalConfig.getJavaOutputDir(), ConstVal.SERVICE_PATH, ConstVal.SERVICE);
-            setPathInfo(pathInfo, template.getServiceImpl(), globalConfig.getJavaOutputDir(), ConstVal.SERVICE_IMPL_PATH, ConstVal.SERVICE_IMPL);
-            setPathInfo(pathInfo, template.getController(), globalConfig.getJavaOutputDir(), ConstVal.CONTROLLER_PATH, ConstVal.CONTROLLER);
-        }
-    }
-
-    private void setPathInfo(Map<String, String> pathInfo, String template, String outputDir, String path, String module) {
-        if (StringUtils.isNotBlank(template)) {
-            pathInfo.put(path, joinPath(outputDir, packageInfo.get(module)));
-        }
     }
 
     /**

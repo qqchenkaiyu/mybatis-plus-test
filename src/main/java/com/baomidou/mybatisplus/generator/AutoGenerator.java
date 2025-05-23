@@ -61,10 +61,6 @@ public class AutoGenerator {
      */
     private StrategyConfig strategy;
     /**
-     * 包 相关配置
-     */
-    private PackageConfig packageInfo;
-    /**
      * 模板 相关配置
      */
     private TemplateConfig template;
@@ -84,7 +80,7 @@ public class AutoGenerator {
         logger.debug("==========================准备生成文件...==========================");
         // 初始化配置
         if (null == config) {
-            config = new ConfigBuilder(packageInfo, dataSource, strategy , globalConfig);
+            config = new ConfigBuilder( dataSource, strategy , globalConfig);
         }
         // 模板引擎初始化执行文件输出
         templateEngine.init(config).mkdirs().batchOutput();

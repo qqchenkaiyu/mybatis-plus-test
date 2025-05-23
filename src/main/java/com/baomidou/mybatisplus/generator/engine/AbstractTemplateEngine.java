@@ -69,48 +69,45 @@ public abstract class AbstractTemplateEngine {
                 // Mp.java
                 String entityName = tableInfo.getEntityName();
                 if (null != entityName && null != pathInfo.get(ConstVal.ENTITY_PATH)) {
-                    String entityFile = String.format(
-                            (pathInfo.get(ConstVal.ENTITY_PATH) + File.separator + "%s" + suffixJavaOrKt()),
-                            entityName);
+                    String entityFile = (pathInfo.get(
+                            ConstVal.ENTITY_PATH) + File.separator + entityName + suffixJavaOrKt());
+
                     if (isCreate(entityFile)) {
-                        writer(objectMap, templateFilePath(template.getEntity()), entityFile);
+                        writer(objectMap, "/templates/entity.java.btl", entityFile);
                     }
                 }
-                // MpMapper.java
+                // entity.java
                 if (null != pathInfo.get(ConstVal.MAPPER_PATH)) {
-                    String mapperFile = String.format((pathInfo.get(
-                                    ConstVal.MAPPER_PATH) + File.separator + entityName + "Mapper" + suffixJavaOrKt()),
-                            entityName);
+                    String mapperFile = (pathInfo.get(
+                            ConstVal.MAPPER_PATH) + File.separator + entityName + "Mapper" + suffixJavaOrKt());
+
                     if (isCreate(mapperFile)) {
-                        writer(objectMap, templateFilePath(template.getMapper()), mapperFile);
+                        writer(objectMap, "/templates/mapper.java.btl", mapperFile);
                     }
                 }
 
                 // IMpService.java
                 if (null != pathInfo.get(ConstVal.SERVICE_PATH)) {
-                    String serviceFile = String.format((pathInfo.get(
-                                    ConstVal.SERVICE_PATH) + File.separator + entityName + "Service" + suffixJavaOrKt()),
-                            entityName);
+                    String serviceFile = (pathInfo.get(
+                            ConstVal.SERVICE_PATH) + File.separator + entityName + "Service" + suffixJavaOrKt());
                     if (isCreate(serviceFile)) {
-                        writer(objectMap, templateFilePath(template.getService()), serviceFile);
+                        writer(objectMap, "/templates/service.java.btl", serviceFile);
                     }
                 }
                 // MpServiceImpl.java
                 if (null != pathInfo.get(ConstVal.SERVICE_IMPL_PATH)) {
-                    String implFile = String.format((pathInfo.get(
-                                    ConstVal.SERVICE_IMPL_PATH) + File.separator + entityName + "ServiceImpl" + suffixJavaOrKt()),
-                            entityName);
+                    String implFile = (pathInfo.get(
+                            ConstVal.SERVICE_IMPL_PATH) + File.separator + entityName + "ServiceImpl" + suffixJavaOrKt());
                     if (isCreate(implFile)) {
-                        writer(objectMap, templateFilePath(template.getServiceImpl()), implFile);
+                        writer(objectMap, "/templates/serviceImpl.java.btl", implFile);
                     }
                 }
                 // MpController.java
                 if (null != pathInfo.get(ConstVal.CONTROLLER_PATH)) {
-                    String controllerFile = String.format((pathInfo.get(
-                                    ConstVal.CONTROLLER_PATH) + File.separator + entityName + "Controller" + suffixJavaOrKt()),
-                            entityName);
+                    String controllerFile = (pathInfo.get(
+                            ConstVal.CONTROLLER_PATH) + File.separator + entityName + "Controller" + suffixJavaOrKt());
                     if (isCreate(controllerFile)) {
-                        writer(objectMap, templateFilePath(template.getController()), controllerFile);
+                        writer(objectMap, "/templates/controller.java.btl", controllerFile);
                     }
                 }
             }
@@ -164,14 +161,6 @@ public abstract class AbstractTemplateEngine {
         return objectMap;
     }
 
-
-    /**
-     * 模板真实文件路径
-     *
-     * @param filePath 文件路径
-     * @return ignore
-     */
-    public abstract String templateFilePath(String filePath);
 
 
     /**

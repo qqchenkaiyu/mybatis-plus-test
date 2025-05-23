@@ -57,8 +57,4 @@ public class BeetlTemplateEngine extends AbstractTemplateEngine {
         logger.debug("模板:" + templatePath + ";  文件:" + outputFile);
     }
 
-    @Override
-    public String templateFilePath(String filePath) {
-        return filePath + ".btl";
-    }
 }

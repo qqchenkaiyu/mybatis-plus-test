@@ -39,7 +39,5 @@ public class TemplateConfig {
 
     private String mapper = ConstVal.TEMPLATE_MAPPER;
 
-    private String xml = ConstVal.TEMPLATE_XML;
-
     private String controller = ConstVal.TEMPLATE_CONTROLLER;
 }

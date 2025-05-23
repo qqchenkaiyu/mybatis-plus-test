@@ -48,8 +48,7 @@ public interface ConstVal {
     String UNDERLINE = "_";
 
     String JAVA_SUFFIX = StringPool.DOT_JAVA;
-    String KT_SUFFIX = ".kt";
-    String XML_SUFFIX = ".xml";
+
 
     String TEMPLATE_ENTITY_JAVA = "/templates/entity.java";
     String TEMPLATE_MAPPER = "/templates/mapper.java";
@@ -57,9 +56,5 @@ public interface ConstVal {
     String TEMPLATE_SERVICE = "/templates/service.java";
     String TEMPLATE_SERVICE_IMPL = "/templates/serviceImpl.java";
     String TEMPLATE_CONTROLLER = "/templates/controller.java";
-
-    String SUPER_MAPPER_CLASS = "com.baomidou.mybatisplus.core.mapper.BaseMapper";
-    String SUPER_SERVICE_CLASS = "com.baomidou.mybatisplus.extension.service.IService";
-    String SUPER_SERVICE_IMPL_CLASS = "com.baomidou.mybatisplus.extension.service.impl.ServiceImpl";
 
 }
