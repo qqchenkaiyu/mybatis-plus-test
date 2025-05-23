@@ -56,16 +56,6 @@ public class GlobalConfig {
      */
     private String author;
 
-    /**
-     * 开启 Kotlin 模式
-     */
-    private boolean kotlin = false;
-
-    /**
-     * 开启 swagger2 模式
-     */
-    private boolean swagger2 = false;
-
 
     /**
      * 开启 BaseResultMap
@@ -76,9 +66,4 @@ public class GlobalConfig {
      * 开启 baseColumnList
      */
     private boolean baseColumnList = true;
-
-    /**
-     * 指定生成的主键的ID类型
-     */
-    private IdType idType;
 }

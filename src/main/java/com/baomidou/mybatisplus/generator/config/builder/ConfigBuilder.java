@@ -258,26 +258,8 @@ public class ConfigBuilder {
             String entityName;
             entityName = NamingStrategy.capitalFirst(processName(tableInfo.getName(), config.getNaming()));
             tableInfo.setEntityName(entityName);
-            // 检测导入包
-            checkImportPackages(tableInfo);
         }
         return tableList;
-    }
-
-    /**
-     * 检测导入包
-     *
-     * @param tableInfo ignore
-     */
-    private void checkImportPackages(TableInfo tableInfo) {
-        if (StringUtils.isNotBlank(strategyConfig.getVersionFieldName())
-                && CollectionUtils.isNotEmpty(tableInfo.getFields())) {
-            tableInfo.getFields().forEach(f -> {
-                if (strategyConfig.getVersionFieldName().equals(f.getName())) {
-                    tableInfo.getImportPackages().add(com.baomidou.mybatisplus.annotation.Version.class.getCanonicalName());
-                }
-            });
-        }
     }
 
 

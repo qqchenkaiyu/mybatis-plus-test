@@ -45,9 +45,6 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         gc.setAuthor("chenkaiyu");
-        // 雪花算法主键
-        gc.setIdType(IdType.ASSIGN_ID);
-        gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
         // 数据源配置

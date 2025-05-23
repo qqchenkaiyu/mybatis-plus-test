@@ -156,10 +156,6 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("package", config.getPackageInfo());
         GlobalConfig globalConfig = config.getGlobalConfig();
         objectMap.put("author", globalConfig.getAuthor());
-        objectMap.put("idType", globalConfig.getIdType() == null ? null : globalConfig.getIdType().toString());
-        objectMap.put("versionFieldName", config.getStrategyConfig().getVersionFieldName());
-        objectMap.put("kotlin", globalConfig.isKotlin());
-        objectMap.put("swagger2", globalConfig.isSwagger2());
         objectMap.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         objectMap.put("table", tableInfo);
         objectMap.put("enableCache", globalConfig.isEnableCache());
@@ -232,7 +228,7 @@ public abstract class AbstractTemplateEngine {
      * 文件后缀
      */
     protected String suffixJavaOrKt() {
-        return getConfigBuilder().getGlobalConfig().isKotlin() ? ConstVal.KT_SUFFIX : ConstVal.JAVA_SUFFIX;
+        return ConstVal.JAVA_SUFFIX;
     }
 
 

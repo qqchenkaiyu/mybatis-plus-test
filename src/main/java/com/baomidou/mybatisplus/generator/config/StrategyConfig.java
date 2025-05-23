@@ -96,10 +96,6 @@ public class StrategyConfig {
      * 是否生成实体时，生成字段注解
      */
     private boolean entityTableFieldAnnotationEnable = false;
-    /**
-     * 乐观锁属性名称
-     */
-    private String versionFieldName;
 
 
     /**

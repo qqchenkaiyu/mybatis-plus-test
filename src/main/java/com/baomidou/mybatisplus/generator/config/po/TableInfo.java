@@ -38,7 +38,6 @@ import java.util.stream.Collectors;
 @Accessors(chain = true)
 public class TableInfo {
 
-    private final Set<String> importPackages = new HashSet<>();
     private String name;
     private String comment;
     private String entityName;
@@ -54,45 +53,8 @@ public class TableInfo {
     public TableInfo setFields(List<TableField> fields) {
         if (CollectionUtils.isNotEmpty(fields)) {
             this.fields = fields;
-            // 收集导入包信息
-            for (TableField field : fields) {
-                if (null != field.getColumnType() && null != field.getColumnType().getPkg()) {
-                    importPackages.add(field.getColumnType().getPkg());
-                }
-                if (null != field.getFill()) {
-                    // 填充字段
-                    importPackages.add(com.baomidou.mybatisplus.annotation.TableField.class.getCanonicalName());
-                    importPackages.add(com.baomidou.mybatisplus.annotation.FieldFill.class.getCanonicalName());
-                }
-            }
         }
         return this;
     }
 
-    public TableInfo setImportPackages(String pkg) {
-        if (importPackages.contains(pkg)) {
-            return this;
-        } else {
-            importPackages.add(pkg);
-            return this;
-        }
-    }
-
-    /**
-     * 逻辑删除
-     */
-    public boolean isLogicDelete(String logicDeletePropertyName) {
-        return fields.parallelStream().anyMatch(tf -> tf.getName().equals(logicDeletePropertyName));
-    }
-
-    /**
-     * 转换filed实体为 xml mapper 中的 base column 字符串信息
-     */
-    public String getFieldNames() {
-        if (CollectionUtils.isNotEmpty(fields)) {
-            List<String> collect = fields.stream().map(TableField::getName).collect(Collectors.toList());
-            fieldNames=Joiner.on(", ").join(collect);
-        }
-        return fieldNames;
-    }
 }

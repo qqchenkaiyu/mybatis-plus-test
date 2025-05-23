@@ -113,11 +113,6 @@ public class AutoGenerator {
          */
         List<TableInfo> tableList = this.getAllTableInfoList(config);
         for (TableInfo tableInfo : tableList) {
-            /* ---------- 添加导入包 ---------- */
-            if (StringUtils.isNotBlank(config.getStrategyConfig().getVersionFieldName())) {
-                // 乐观锁注解
-                tableInfo.setImportPackages(Version.class.getCanonicalName());
-            }
             // Boolean类型is前缀处理
             if (config.getStrategyConfig().isEntityBooleanColumnRemoveIsPrefix()
                 && CollectionUtils.isNotEmpty(tableInfo.getFields())) {
@@ -125,7 +120,6 @@ public class AutoGenerator {
                     .filter(field -> field.getPropertyName().startsWith("is")).collect(Collectors.toList());
                 tableFields.forEach(field -> {
                     //主键为is的情况基本上是不存在的.
-                    tableInfo.setImportPackages(com.baomidou.mybatisplus.annotation.TableField.class.getCanonicalName());
                     field.setConvert(true);
                     field.setPropertyName(StringUtils.removePrefixAfterPrefixToLower(field.getPropertyName(), 2));
                 });
