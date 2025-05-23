@@ -26,6 +26,7 @@ public class ${Entity}Controller {
     ${Entity}Service ${entity}Service;
 
     @GetMapping
+    @ApiOperation(value = "分页查询数据")
     public ApiResponse queryAll(${Entity} obj,
                                 @RequestParam(defaultValue = "1") int pageNum,
                                 @RequestParam(defaultValue = "10") int pageSize) {
@@ -43,7 +44,7 @@ public class ${Entity}Controller {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "查询数据")
+    @ApiOperation(value = "根据id查询数据")
     public ApiResponse query(@PathVariable String id) {
         ${Entity} ${entity} = ${entity}Service.getById(id);
         return ApiResponse.success(${entity});
@@ -67,6 +68,7 @@ public class ${Entity}Controller {
      * @return
      */
     @PostMapping
+    @ApiOperation(value = "新增或修改数据")
     public ApiResponse update(@Valid @RequestBody ${Entity} obj) {
         boolean success = ${entity}Service.saveOrUpdate(obj);
         return ApiResponse.data(success);
