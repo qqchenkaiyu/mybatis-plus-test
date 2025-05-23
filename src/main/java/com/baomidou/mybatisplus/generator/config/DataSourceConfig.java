@@ -17,16 +17,14 @@ package com.baomidou.mybatisplus.generator.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
-import com.baomidou.mybatisplus.generator.config.converts.TypeConvertRegistry;
-import com.baomidou.mybatisplus.generator.config.querys.IDbQuery;
-import com.baomidou.mybatisplus.generator.config.querys.DbQueryRegistry;
+import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
+import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Optional;
 
 /**
  * 数据库配置
@@ -41,19 +39,15 @@ public class DataSourceConfig {
     /**
      * 数据库信息查询
      */
-    private IDbQuery dbQuery;
+    private MySqlQuery dbQuery = new MySqlQuery();
     /**
      * 数据库类型
      */
     private DbType dbType;
     /**
-     * PostgreSQL schemaName
-     */
-    private String schemaName;
-    /**
      * 类型转换
      */
-    private ITypeConvert typeConvert;
+    private MySqlTypeConvert typeConvert = new MySqlTypeConvert();
     /**
      * 驱动连接的URL
      */
@@ -71,14 +65,7 @@ public class DataSourceConfig {
      */
     private String password;
 
-    public IDbQuery getDbQuery() {
-        if (null == dbQuery) {
-            DbType dbType = getDbType();
-            DbQueryRegistry dbQueryRegistry = new DbQueryRegistry();
-            // 默认 MYSQL
-            dbQuery = Optional.ofNullable(dbQueryRegistry.getDbQuery(dbType))
-                    .orElseGet(() -> dbQueryRegistry.getDbQuery(DbType.MYSQL));
-        }
+    public MySqlQuery getDbQuery() {
         return dbQuery;
     }
 
@@ -135,13 +122,7 @@ public class DataSourceConfig {
         }
     }
 
-    public ITypeConvert getTypeConvert() {
-        if (null == typeConvert) {
-            DbType dbType = getDbType();
-            TypeConvertRegistry typeConvertRegistry = new TypeConvertRegistry();
-            // 默认 MYSQL
-            typeConvert = Optional.ofNullable(typeConvertRegistry.getTypeConvert(dbType)).orElseGet(() -> typeConvertRegistry.getTypeConvert(DbType.MYSQL));
-        }
+    public MySqlTypeConvert getTypeConvert() {
         return typeConvert;
     }
 

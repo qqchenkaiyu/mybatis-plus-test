@@ -16,8 +16,6 @@
 package com.baomidou.mybatisplus.generator.config.converts;
 
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.ITypeConvert;
-import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 
 /**
@@ -26,10 +24,9 @@ import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
  * @author hubin
  * @since 2017-01-20
  */
-public class MySqlTypeConvert implements ITypeConvert {
+public class MySqlTypeConvert  {
 
-    @Override
-    public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
+    public DbColumnType processTypeConvert( String fieldType) {
         String t = fieldType.toLowerCase();
         if (t.contains("char")) {
             return DbColumnType.STRING;

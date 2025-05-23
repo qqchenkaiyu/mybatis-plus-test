@@ -26,51 +26,51 @@ import java.sql.SQLException;
  * @author hubin
  * @since 2018-01-16
  */
-public class MySqlQuery implements IDbQuery {
+public class MySqlQuery  {
 
-    @Override
+
     public String tablesSql(DataSourceConfig dataSourceConfig) {
         return "show table status WHERE 1=1 ";
     }
 
 
-    @Override
+
     public String tableFieldsSql() {
         return "show full fields from `%s`";
     }
 
 
-    @Override
+
     public String tableName() {
         return "NAME";
     }
 
 
-    @Override
+
     public String tableComment() {
         return "COMMENT";
     }
 
 
-    @Override
+
     public String fieldName() {
         return "FIELD";
     }
 
 
-    @Override
+
     public String fieldType() {
         return "TYPE";
     }
 
 
-    @Override
+
     public String fieldComment() {
         return "COMMENT";
     }
 
 
-    @Override
+
     public String fieldKey() {
         return "KEY";
     }

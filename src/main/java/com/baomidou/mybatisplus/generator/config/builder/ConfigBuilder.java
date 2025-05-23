@@ -155,7 +155,7 @@ public class ConfigBuilder {
      * @return ignore
      */
     private boolean tableNameMatches(String setTableName, String dbTableName) {
-        return setTableName.equals("*")||setTableName.equalsIgnoreCase(dbTableName);
+        return setTableName.equals("*") || setTableName.equalsIgnoreCase(dbTableName);
     }
 
     /**
@@ -167,19 +167,9 @@ public class ConfigBuilder {
     private TableInfo convertTableFields(TableInfo tableInfo) {
         boolean haveId = false;
         List<TableField> fieldList = new ArrayList<>();
-        DbType dbType = dataSourceConfig.getDbType();
         String tableName = tableInfo.getName();
         try {
-            String tableFieldsSql = dataSourceConfig.getDbQuery().tableFieldsSql();
-            if (DbType.POSTGRE_SQL == dbType) {
-                tableFieldsSql = String.format(tableFieldsSql, dataSourceConfig.getSchemaName(), tableName);
-            } else if (DbType.ORACLE == dbType) {
-                tableName = tableName.toUpperCase();
-                tableFieldsSql = String.format(tableFieldsSql.replace("#schema", dataSourceConfig.getSchemaName()),
-                        tableName);
-            } else {
-                tableFieldsSql = String.format(tableFieldsSql, tableName);
-            }
+            String tableFieldsSql = String.format(dataSourceConfig.getDbQuery().tableFieldsSql(), tableName);
             try (PreparedStatement preparedStatement = dataSourceConfig.getConn()
                     .prepareStatement(tableFieldsSql); ResultSet results = preparedStatement.executeQuery()) {
                 while (results.next()) {
@@ -199,7 +189,7 @@ public class ConfigBuilder {
                     field.setName(columnName);
                     field.setType(results.getString(dataSourceConfig.getDbQuery().fieldType()));
                     field.setPropertyName(NamingStrategy.underlineToCamel(field.getName()));
-                    field.setColumnType(dataSourceConfig.getTypeConvert().processTypeConvert(globalConfig, field));
+                    field.setColumnType(dataSourceConfig.getTypeConvert().processTypeConvert(field.getType()));
                     field.setComment(results.getString(dataSourceConfig.getDbQuery().fieldComment()));
                     fieldList.add(field);
                 }
