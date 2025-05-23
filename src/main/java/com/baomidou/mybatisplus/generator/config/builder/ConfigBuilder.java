@@ -21,7 +21,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableField;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.querys.IDbQuery;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.io.File;
@@ -42,24 +41,10 @@ import java.util.stream.Collectors;
 public class ConfigBuilder {
 
     /**
-     * 模板路径配置信息
-     */
-    private final TemplateConfig template=new TemplateConfig();
-    /**
      * 数据库配置
      */
     private final DataSourceConfig dataSourceConfig;
-    /**
-     * SQL连接
-     */
-    private Connection connection;
-    /**
-     * SQL语句类型
-     */
-    private IDbQuery dbQuery;
-    private DbType dbType;
 
-    private String parent = "";
     /**
      * 数据库表信息
      */
@@ -85,21 +70,14 @@ public class ConfigBuilder {
      * @param strategyConfig   表配置
      * @param globalConfig     全局配置
      */
-    public ConfigBuilder( DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
-                          GlobalConfig globalConfig) {
+    public ConfigBuilder(DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig, GlobalConfig globalConfig) {
         // 全局配置
         if (null != globalConfig)
             this.globalConfig = globalConfig;
         // 包配置
         pathInfo = PathInfoUtils.buildPathInfo(this.globalConfig);
         this.dataSourceConfig = dataSourceConfig;
-        handlerDataSource(dataSourceConfig);
-        // 策略配置
-        if (null == strategyConfig) {
-            this.strategyConfig = new StrategyConfig();
-        } else {
-            this.strategyConfig = strategyConfig;
-        }
+        this.strategyConfig = strategyConfig;
         tableInfoList = getTablesInfo(this.strategyConfig);
     }
 
@@ -114,8 +92,6 @@ public class ConfigBuilder {
     }
 
 
-
-
     /**
      * 表信息
      *
@@ -125,34 +101,14 @@ public class ConfigBuilder {
         return tableInfoList;
     }
 
-    /**
-     * 模板路径配置信息
-     *
-     * @return 所以模板路径配置信息
-     */
-    public TemplateConfig getTemplate() {
-        return template == null ? new TemplateConfig() : template;
-    }
-
-    /**
-     * 处理数据源配置
-     *
-     * @param config DataSourceConfig
-     */
-    private void handlerDataSource(DataSourceConfig config) {
-        connection = config.getConn();
-        dbType = config.getDbType();
-        dbQuery = config.getDbQuery();
-    }
 
     /**
      * 处理表对应的类名称
      *
      * @param tableList 表名称
-     * @param config    策略配置项
      * @return 补充完整信息后的表
      */
-    private List<TableInfo> processTable(List<TableInfo> tableList, StrategyConfig config) {
+    private List<TableInfo> processTable(List<TableInfo> tableList) {
 
         for (TableInfo tableInfo : tableList) {
             String entityName;
@@ -173,15 +129,15 @@ public class ConfigBuilder {
         Set<String> notExistTables = Arrays.stream(config.getInclude()).collect(Collectors.toSet());
         try {
             //根据不同数据库类型得到不同表查询sql
-            StringBuilder sql = new StringBuilder(dbQuery.tablesSql(dataSourceConfig));
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql.toString());
-                 ResultSet results = preparedStatement.executeQuery()) {
+            StringBuilder sql = new StringBuilder(dataSourceConfig.getDbQuery().tablesSql(dataSourceConfig));
+            try (PreparedStatement preparedStatement = dataSourceConfig.getConn()
+                    .prepareStatement(sql.toString()); ResultSet results = preparedStatement.executeQuery()) {
                 while (results.next()) {
-                    String tableName = results.getString(dbQuery.tableName());
+                    String tableName = results.getString(dataSourceConfig.getDbQuery().tableName());
                     if (StringUtils.isNotBlank(tableName)) {
                         TableInfo tableInfo = new TableInfo();
                         tableInfo.setName(tableName);
-                        tableInfo.setComment(results.getString(dbQuery.tableComment()));
+                        tableInfo.setComment(results.getString(dataSourceConfig.getDbQuery().tableComment()));
                         for (String includeTable : config.getInclude()) {
                             // 忽略大小写等于 或 正则 true
                             if (tableNameMatches(includeTable, tableName)) {
@@ -200,10 +156,10 @@ public class ConfigBuilder {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            // 性能优化，只处理需执行表字段 github issues/219
-            tableList.forEach(ti -> convertTableFields(ti, config));
+        // 性能优化，只处理需执行表字段 github issues/219
+        tableList.forEach(ti -> convertTableFields(ti));
 
-        return processTable(tableList, config);
+        return processTable(tableList);
     }
 
 
@@ -222,32 +178,31 @@ public class ConfigBuilder {
      * 将字段信息与表信息关联
      *
      * @param tableInfo 表信息
-     * @param config    命名策略
      * @return ignore
      */
-    private TableInfo convertTableFields(TableInfo tableInfo, StrategyConfig config) {
+    private TableInfo convertTableFields(TableInfo tableInfo) {
         boolean haveId = false;
         List<TableField> fieldList = new ArrayList<>();
-        DbType dbType = this.dbType;
+        DbType dbType = dataSourceConfig.getDbType();
         String tableName = tableInfo.getName();
         try {
-            String tableFieldsSql = dbQuery.tableFieldsSql();
+            String tableFieldsSql = dataSourceConfig.getDbQuery().tableFieldsSql();
             if (DbType.POSTGRE_SQL == dbType) {
                 tableFieldsSql = String.format(tableFieldsSql, dataSourceConfig.getSchemaName(), tableName);
-            }else if (DbType.ORACLE == dbType) {
+            } else if (DbType.ORACLE == dbType) {
                 tableName = tableName.toUpperCase();
-                tableFieldsSql = String.format(tableFieldsSql.replace("#schema", dataSourceConfig.getSchemaName()), tableName);
+                tableFieldsSql = String.format(tableFieldsSql.replace("#schema", dataSourceConfig.getSchemaName()),
+                        tableName);
             } else {
                 tableFieldsSql = String.format(tableFieldsSql, tableName);
             }
-            try (
-                    PreparedStatement preparedStatement = connection.prepareStatement(tableFieldsSql);
-                    ResultSet results = preparedStatement.executeQuery()) {
+            try (PreparedStatement preparedStatement = dataSourceConfig.getConn()
+                    .prepareStatement(tableFieldsSql); ResultSet results = preparedStatement.executeQuery()) {
                 while (results.next()) {
                     TableField field = new TableField();
-                    String columnName = results.getString(dbQuery.fieldName());
+                    String columnName = results.getString(dataSourceConfig.getDbQuery().fieldName());
                     // 避免多重主键设置，目前只取第一个找到ID，并放到list中的索引为0的位置
-                    String key = results.getString(dbQuery.fieldKey());
+                    String key = results.getString(dataSourceConfig.getDbQuery().fieldKey());
                     boolean isId = StringUtils.isNotBlank(key) && "PRI".equals(key.toUpperCase());
                     // 处理ID
                     if (isId && !haveId) {
@@ -258,10 +213,10 @@ public class ConfigBuilder {
                     }
                     // 处理其它信息
                     field.setName(columnName);
-                    field.setType(results.getString(dbQuery.fieldType()));
+                    field.setType(results.getString(dataSourceConfig.getDbQuery().fieldType()));
                     field.setPropertyName(NamingStrategy.underlineToCamel(field.getName()));
                     field.setColumnType(dataSourceConfig.getTypeConvert().processTypeConvert(globalConfig, field));
-                    field.setComment(results.getString(dbQuery.fieldComment()));
+                    field.setComment(results.getString(dataSourceConfig.getDbQuery().fieldComment()));
                     fieldList.add(field);
                 }
             }
@@ -292,19 +247,7 @@ public class ConfigBuilder {
     }
 
 
-    /**
-     * 连接父子包名
-     *
-     * @param parent     父包名
-     * @param subPackage 子包名
-     * @return 连接后的包名
-     */
-    private String joinPackage(String parent, String subPackage) {
-        if (StringUtils.isBlank(parent)) {
-            return subPackage;
-        }
-        return parent + StringPool.DOT + subPackage;
-    }
+
 
 
     public GlobalConfig getGlobalConfig() {

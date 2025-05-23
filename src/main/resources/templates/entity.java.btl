@@ -1,4 +1,4 @@
-package ${package.Entity};
+package ${config.globalConfig.parent}.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,7 +14,7 @@ import java.time.*;
  * </p>
  *
  * @author ${author}
- * @since <%= LocalDate.now().toString() %>
+ * @since ${date}
  */
 @Data
 @Accessors(chain = true)

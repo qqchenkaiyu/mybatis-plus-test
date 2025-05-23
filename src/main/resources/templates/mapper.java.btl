@@ -1,6 +1,6 @@
-package ${package.Mapper};
+package ${config.globalConfig.parent}.mapper;
 
-import ${package.Entity}.${Entity};
+import ${config.globalConfig.parent}.entity.${Entity};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  *
  * @author ${author}
- * @since <%= LocalDate.now().toString() %>
+ * @since ${date}
  */
 
 public interface ${Entity}Mapper extends BaseMapper<${Entity}> {

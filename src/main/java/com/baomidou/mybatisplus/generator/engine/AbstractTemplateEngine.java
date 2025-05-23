@@ -15,19 +15,14 @@
  */
 package com.baomidou.mybatisplus.generator.engine;
 
-import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.TemplateConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -65,7 +60,6 @@ public abstract class AbstractTemplateEngine {
             for (TableInfo tableInfo : tableInfoList) {
                 Map<String, Object> objectMap = getObjectMap(tableInfo);
                 Map<String, String> pathInfo = getConfigBuilder().getPathInfo();
-                TemplateConfig template = getConfigBuilder().getTemplate();
                 // Mp.java
                 String entityName = tableInfo.getEntityName();
                 if (null != entityName && null != pathInfo.get(ConstVal.ENTITY_PATH)) {
@@ -156,6 +150,7 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("config", config);
         objectMap.put("author", config.getGlobalConfig().getAuthor());
         objectMap.put("table", tableInfo);
+        objectMap.put("date",  new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         objectMap.put("Entity", tableInfo.getEntityName());
         objectMap.put("entity", StringUtils.firstToLowerCase(tableInfo.getEntityName()));
         return objectMap;

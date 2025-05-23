@@ -1,6 +1,6 @@
-package ${package.Service};
+package ${config.globalConfig.parent}.service;
 
-import ${package.Entity}.${Entity};
+import ${config.globalConfig.parent}.entity.${Entity};
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author ${author}
- * @since <%= LocalDate.now().toString() %>
+ * @since ${date}
  */
 public interface ${Entity}Service extends IService<${Entity}> {
 }

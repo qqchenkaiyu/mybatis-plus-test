@@ -1,6 +1,6 @@
-package ${package.Controller};
+package ${config.globalConfig.parent}.controller;
 
-import ${package.Service}.${Entity}Service;
+import ${config.globalConfig.parent}.service.${Entity}Service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.swagger.annotations.ApiOperation;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import ${package.Entity}.${Entity};
+import ${config.globalConfig.parent}.entity.${Entity};
 import com.baomidou.common.LogRequest;
 import com.baomidou.common.ApiResponse;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
  * </p>
  *
  * @author ${author}
- * @since <%= LocalDate.now().toString() %>
+ * @since ${date}
  */
 @RestController
 @RequestMapping("/${entity}")
