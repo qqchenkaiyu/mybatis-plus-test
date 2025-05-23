@@ -24,18 +24,8 @@ public class RequestContextUtils {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes != null) {
             Object value = requestAttributes.getAttribute(API_OPERATION_KEY, RequestAttributes.SCOPE_REQUEST);
-            return value != null ? value.toString() : null;
+            return value != null ? value.toString() : "";
         }
         return "";
-    }
-
-    /**
-     * 清除当前请求中的值（可选，通常由 Spring 自动管理生命周期）
-     */
-    public static void clearApiOperation() {
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if (requestAttributes != null) {
-            requestAttributes.removeAttribute(API_OPERATION_KEY, RequestAttributes.SCOPE_REQUEST);
-        }
     }
 }
