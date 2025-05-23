@@ -25,7 +25,7 @@ public class PathInfoUtils {
                 joinPath(outputDir, globalConfig.getParent() + ".service"));
 
         pathInfo.put(ConstVal.SERVICE_IMPL_PATH,
-                joinPath(outputDir, globalConfig.getParent() + ".serviceImpl"));
+                joinPath(outputDir, globalConfig.getParent() + ".service.impl"));
 
         pathInfo.put(ConstVal.CONTROLLER_PATH,
                 joinPath(outputDir, globalConfig.getParent() + ".controller" ));

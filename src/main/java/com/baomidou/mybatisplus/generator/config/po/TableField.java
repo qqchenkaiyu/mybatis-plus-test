@@ -32,28 +32,10 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 public class TableField {
-
-    private boolean convert;
     private boolean keyFlag;
     private String name;
     private String type;
     private String propertyName;
     private DbColumnType columnType;
     private String comment;
-    private String fill;
-    /**
-     * 是否关键字
-     *
-     * @since 3.3.2
-     */
-    private boolean keyWords;
-    /**
-     * 自定义查询字段列表
-     */
-    private Map<String, Object> customMap;
-
-    public TableField setPropertyName( String propertyName) {
-        this.propertyName = propertyName;
-        return this;
-    }
 }

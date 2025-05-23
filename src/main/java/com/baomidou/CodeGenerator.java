@@ -45,7 +45,6 @@ public class CodeGenerator {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(dataSource.getJdbcUrl());
-        // dsc.setSchemaName("public");
         dsc.setDriverName(dataSource.getDriverClassName());
         dsc.setUsername(dataSource.getUsername());
         dsc.setPassword(dataSource.getPassword());

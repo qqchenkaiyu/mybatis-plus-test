@@ -122,7 +122,7 @@ public class ConfigBuilder {
         List<TableInfo> tableList = new ArrayList<>();
         try {
             //根据不同数据库类型得到不同表查询sql
-            StringBuilder sql = new StringBuilder(dataSourceConfig.getDbQuery().tablesSql(dataSourceConfig));
+            StringBuilder sql = new StringBuilder(dataSourceConfig.getDbQuery().tablesSql());
             try (PreparedStatement preparedStatement = dataSourceConfig.getConn()
                     .prepareStatement(sql.toString()); ResultSet results = preparedStatement.executeQuery()) {
                 while (results.next()) {
@@ -144,18 +144,6 @@ public class ConfigBuilder {
         tableList.forEach(ti -> convertTableFields(ti));
 
         return processTable(tableList);
-    }
-
-
-    /**
-     * 表名匹配
-     *
-     * @param setTableName 设置表名
-     * @param dbTableName  数据库表单
-     * @return ignore
-     */
-    private boolean tableNameMatches(String setTableName, String dbTableName) {
-        return setTableName.equals("*") || setTableName.equalsIgnoreCase(dbTableName);
     }
 
     /**

@@ -15,9 +15,6 @@
  */
 package com.baomidou.mybatisplus.generator.config;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.generator.config.rules.DateType;
-
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -40,12 +37,6 @@ public class GlobalConfig {
      * 是否覆盖已有文件
      */
     private boolean fileOverride = true;
-
-    /**
-     * 是否打开输出目录
-     */
-    private boolean open = false;
-
 
     /**
      * 开发人员

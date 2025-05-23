@@ -2,7 +2,6 @@ package ${config.globalConfig.parent}.mapper;
 
 import ${config.globalConfig.parent}.entity.${Entity};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 /**

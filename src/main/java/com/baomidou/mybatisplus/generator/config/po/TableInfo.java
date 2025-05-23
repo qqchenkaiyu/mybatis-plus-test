@@ -30,22 +30,8 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class TableInfo {
-
     private String name;
     private String comment;
     private String entityName;
     private List<TableField> fields;
-
-    public TableInfo setEntityName( String entityName) {
-        this.entityName = entityName;
-        return this;
-    }
-
-    public TableInfo setFields(List<TableField> fields) {
-        if (CollectionUtils.isNotEmpty(fields)) {
-            this.fields = fields;
-        }
-        return this;
-    }
-
 }

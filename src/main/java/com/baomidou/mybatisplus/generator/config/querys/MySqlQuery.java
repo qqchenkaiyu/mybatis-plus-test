@@ -29,7 +29,7 @@ import java.sql.SQLException;
 public class MySqlQuery  {
 
 
-    public String tablesSql(DataSourceConfig dataSourceConfig) {
+    public String tablesSql() {
         return "show table status WHERE 1=1 ";
     }
 
