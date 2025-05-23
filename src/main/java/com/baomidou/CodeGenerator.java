@@ -70,9 +70,6 @@ public class CodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setRestControllerStyle(true);
-        strategy.setLogicDeleteFieldName("deleted");
-        strategy.setTableFillList(Arrays.asList(new TableFill("created_time", FieldFill.INSERT),
-                new TableFill("update_time", FieldFill.INSERT_UPDATE)));
         strategy.setInclude("students");
         mpg.setStrategy(strategy);
         mpg.execute();

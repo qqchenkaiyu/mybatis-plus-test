@@ -74,7 +74,7 @@ public class StrategyConfig {
      * -----------------------------------<br>
      * public User setName(String name) { this.name = name; return this; }
      *
-     * @deprecated 3.3.2 {@link #chainModel}
+     * @deprecated 3.3.2 {@link }
      */
     @Deprecated
     private boolean entityBuilderModel = false;
@@ -100,14 +100,6 @@ public class StrategyConfig {
      * 乐观锁属性名称
      */
     private String versionFieldName;
-    /**
-     * 逻辑删除属性名称
-     */
-    private String logicDeleteFieldName;
-    /**
-     * 表填充字段
-     */
-    private List<TableFill> tableFillList = null;
 
 
     /**

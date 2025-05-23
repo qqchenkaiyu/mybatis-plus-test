@@ -380,13 +380,6 @@ public class ConfigBuilder {
                     field.setPropertyName(strategyConfig, processName(field.getName(), config.getColumnNaming()));
                     field.setColumnType(dataSourceConfig.getTypeConvert().processTypeConvert(globalConfig, field));
                     field.setComment(results.getString(dbQuery.fieldComment()));
-                    // 填充逻辑判断
-                    List<TableFill> tableFillList = getStrategyConfig().getTableFillList();
-                    if (null != tableFillList) {
-                        // 忽略大写字段问题
-                        tableFillList.stream().filter(tf -> tf.getFieldName().equalsIgnoreCase(field.getName()))
-                                .findFirst().ifPresent(tf -> field.setFill(tf.getFieldFill().name()));
-                    }
                     fieldList.add(field);
                 }
             }

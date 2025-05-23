@@ -114,10 +114,6 @@ public class AutoGenerator {
         List<TableInfo> tableList = this.getAllTableInfoList(config);
         for (TableInfo tableInfo : tableList) {
             /* ---------- 添加导入包 ---------- */
-            if (config.getStrategyConfig().getLogicDeleteFieldName() != null && tableInfo.isLogicDelete(config.getStrategyConfig().getLogicDeleteFieldName())) {
-                // 逻辑删除注解
-                tableInfo.setImportPackages(TableLogic.class.getCanonicalName());
-            }
             if (StringUtils.isNotBlank(config.getStrategyConfig().getVersionFieldName())) {
                 // 乐观锁注解
                 tableInfo.setImportPackages(Version.class.getCanonicalName());
