@@ -33,7 +33,6 @@ public class TemplateConfig {
 
     private String entity = ConstVal.TEMPLATE_ENTITY_JAVA;
 
-
     private String service = ConstVal.TEMPLATE_SERVICE;
 
     private String serviceImpl = ConstVal.TEMPLATE_SERVICE_IMPL;
@@ -43,6 +42,4 @@ public class TemplateConfig {
     private String xml = ConstVal.TEMPLATE_XML;
 
     private String controller = ConstVal.TEMPLATE_CONTROLLER;
-
-
 }

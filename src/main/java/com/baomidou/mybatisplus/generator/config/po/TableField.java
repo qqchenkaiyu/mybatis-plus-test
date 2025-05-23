@@ -54,35 +54,8 @@ public class TableField {
      */
     private Map<String, Object> customMap;
 
-    public TableField setConvert(boolean convert) {
-        this.convert = convert;
-        return this;
-    }
-
-    protected TableField setConvert(StrategyConfig strategyConfig) {
-        if (strategyConfig.isEntityTableFieldAnnotationEnable() || isKeyWords()) {
-            this.convert = true;
-            return this;
-        }
-        if (strategyConfig.isCapitalModeNaming(name)) {
-            this.convert = false;
-        } else {
-            // 转换字段
-            if (NamingStrategy.underline_to_camel == strategyConfig.getColumnNaming()) {
-                // 包含大写处理
-                if (StringUtils.containsUpperCase(name)) {
-                    this.convert = true;
-                }
-            } else if (!name.equals(propertyName)) {
-                this.convert = true;
-            }
-        }
-        return this;
-    }
-
-    public TableField setPropertyName(StrategyConfig strategyConfig, String propertyName) {
+    public TableField setPropertyName( String propertyName) {
         this.propertyName = propertyName;
-        this.setConvert(strategyConfig);
         return this;
     }
 
@@ -111,21 +84,6 @@ public class TableField {
             return firstChar.toLowerCase() + setGetName.substring(1);
         }
         return firstChar.toUpperCase() + setGetName.substring(1);
-    }
-
-    /**
-     * 获取注解字段名称
-     *
-     * @return 字段
-     * @since 3.3.2
-     */
-    public String getAnnotationColumnName() {
-        if (keyWords) {
-            if (name.startsWith("\"")) {
-                return String.format("\\\"%s\\\"", name);
-            }
-        }
-        return name;
     }
 
 }

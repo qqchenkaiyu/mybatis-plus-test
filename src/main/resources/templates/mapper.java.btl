@@ -11,7 +11,7 @@ import java.util.List;
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @since <%= LocalDate.now().toString() %>
  */
 
 public interface ${Entity}Mapper extends BaseMapper<${Entity}> {

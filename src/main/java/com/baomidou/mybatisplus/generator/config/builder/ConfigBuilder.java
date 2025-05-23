@@ -227,7 +227,7 @@ public class ConfigBuilder {
 
         for (TableInfo tableInfo : tableList) {
             String entityName;
-            entityName = NamingStrategy.capitalFirst(processName(tableInfo.getName(), config.getNaming()));
+            entityName = NamingStrategy.capitalFirst(NamingStrategy.underlineToCamel(tableInfo.getName()));
             tableInfo.setEntityName(entityName);
         }
         return tableList;
@@ -330,7 +330,7 @@ public class ConfigBuilder {
                     // 处理其它信息
                     field.setName(columnName);
                     field.setType(results.getString(dbQuery.fieldType()));
-                    field.setPropertyName(strategyConfig, processName(field.getName(), config.getColumnNaming()));
+                    field.setPropertyName(NamingStrategy.underlineToCamel(field.getName()));
                     field.setColumnType(dataSourceConfig.getTypeConvert().processTypeConvert(globalConfig, field));
                     field.setComment(results.getString(dbQuery.fieldComment()));
                     fieldList.add(field);
@@ -378,37 +378,9 @@ public class ConfigBuilder {
     }
 
 
-    /**
-     * 处理表/字段名称
-     *
-     * @param name     ignore
-     * @param strategy ignore
-     * @return 根据策略返回处理后的名称
-     */
-    private String processName(String name, NamingStrategy strategy) {
-        String propertyName;
- if (strategy == NamingStrategy.underline_to_camel) {
-            // 下划线转驼峰
-            propertyName = NamingStrategy.underlineToCamel(name);
-        } else {
-            // 不处理
-            propertyName = name;
-        }
-        return propertyName;
-    }
-
-
     public GlobalConfig getGlobalConfig() {
         return globalConfig;
     }
-
-
-    public ConfigBuilder setGlobalConfig(GlobalConfig globalConfig) {
-        this.globalConfig = globalConfig;
-        return this;
-    }
-
-
 
 
 }

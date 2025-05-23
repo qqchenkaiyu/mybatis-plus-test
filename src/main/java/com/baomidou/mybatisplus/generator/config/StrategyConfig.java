@@ -34,77 +34,13 @@ import java.util.Optional;
 @Accessors(chain = true)
 public class StrategyConfig {
     /**
-     * 是否大写命名
-     */
-    private boolean isCapitalMode = false;
-
-    /**
-     * 数据库表映射到实体的命名策略
-     */
-    private NamingStrategy naming = NamingStrategy.no_change;
-    /**
-     * 数据库表字段映射到实体的命名策略
-     * <p>未指定按照 naming 执行</p>
-     */
-    private NamingStrategy columnNaming = null;
-    /**
      * 需要包含的表名，允许正则表达式（与exclude二选一配置）<br/>
      */
     @Setter(AccessLevel.NONE)
     private String[] include = null;
 
-    /**
-     * 实体是否生成 serialVersionUID
-     */
-    private boolean entitySerialVersionUID = true;
-    /**
-     * 【实体】是否生成字段常量（默认 false）<br>
-     * -----------------------------------<br>
-     * public static final String ID = "test_id";
-     */
-    private boolean entityColumnConstant = false;
-    /**
-     * 【实体】是否为构建者模型（默认 false）<br>
-     * -----------------------------------<br>
-     * public User setName(String name) { this.name = name; return this; }
-     *
-     * @deprecated 3.3.2 {@link }
-     */
-    @Deprecated
-    private boolean entityBuilderModel = false;
-    /**
-     * 生成 <code>@RestController</code> 控制器
-     * <pre>
-     *      <code>@Controller</code> -> <code>@RestController</code>
-     * </pre>
-     */
-    private boolean restControllerStyle = false;
-    /**
-     * 是否生成实体时，生成字段注解
-     */
-    private boolean entityTableFieldAnnotationEnable = false;
-
-
-    /**
-     * 大写命名、字段符合大写字母数字下划线命名
-     *
-     * @param word 待判断字符串
-     */
-    public boolean isCapitalModeNaming(String word) {
-        return isCapitalMode && StringUtils.isCapitalMode(word);
-    }
-
-
-    public NamingStrategy getColumnNaming() {
-        // 未指定以 naming 策略为准
-        return Optional.ofNullable(columnNaming).orElse(naming);
-    }
-
-
     public StrategyConfig setInclude(String... include) {
         this.include = include;
         return this;
     }
-
-
 }

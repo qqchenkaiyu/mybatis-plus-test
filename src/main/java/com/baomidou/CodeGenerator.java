@@ -58,9 +58,6 @@ public class CodeGenerator {
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        strategy.setRestControllerStyle(true);
         strategy.setInclude("students");
         mpg.setStrategy(strategy);
         mpg.execute();

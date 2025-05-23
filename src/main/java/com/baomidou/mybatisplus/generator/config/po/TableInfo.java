@@ -43,8 +43,6 @@ public class TableInfo {
     private String entityName;
     private List<TableField> fields;
 
-    private String fieldNames="";
-
     public TableInfo setEntityName( String entityName) {
         this.entityName = entityName;
         return this;

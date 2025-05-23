@@ -20,7 +20,7 @@ import javax.validation.Valid;
  * </p>
  *
  * @author ${author}
- * @since ${date}
+ * @since <%= LocalDate.now().toString() %>
  */
 @RestController
 @RequestMapping("/${entity}")
