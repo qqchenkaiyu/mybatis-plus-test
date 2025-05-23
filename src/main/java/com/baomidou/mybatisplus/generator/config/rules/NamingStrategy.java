@@ -65,51 +65,6 @@ public enum NamingStrategy {
         return result.toString();
     }
 
-    /**
-     * 去掉指定的前缀
-     *
-     * @param name   ignore
-     * @param prefix ignore
-     * @return ignore
-     */
-    public static String removePrefix(String name, String... prefix) {
-        if (StringUtils.isBlank(name)) {
-            return StringPool.EMPTY;
-        }
-        if (null != prefix) {
-            // 判断是否有匹配的前缀，然后截取前缀
-            // 删除前缀
-            return Arrays.stream(prefix).filter(pf -> name.toLowerCase()
-                .matches(StringPool.HAT + pf.toLowerCase() + ".*"))
-                .findFirst().map(pf -> name.substring(pf.length())).orElse(name);
-        }
-        return name;
-    }
-
-    /**
-     * 判断是否包含prefix
-     *
-     * @param name   ignore
-     * @param prefix ignore
-     * @return ignore
-     */
-    public static boolean isPrefixContained(String name, String... prefix) {
-        if (null == prefix || StringUtils.isBlank(name)) {
-            return false;
-        }
-        return Arrays.stream(prefix).anyMatch(pf -> name.toLowerCase().matches(StringPool.HAT + pf.toLowerCase() + ".*"));
-    }
-
-    /**
-     * 去掉下划线前缀且将后半部分转成驼峰格式
-     *
-     * @param name        ignore
-     * @param tablePrefix ignore
-     * @return ignore
-     */
-    public static String removePrefixAndCamel(String name, String[] tablePrefix) {
-        return underlineToCamel(removePrefix(name, tablePrefix));
-    }
 
     /**
      * 实体首字母大写

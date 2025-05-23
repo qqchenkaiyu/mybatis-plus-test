@@ -18,7 +18,7 @@ package com.baomidou.mybatisplus.generator.config.converts;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.ITypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
+import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 
 /**
  * PostgreSQL 字段类型转换
@@ -29,7 +29,7 @@ import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 public class PostgreSqlTypeConvert implements ITypeConvert {
 
     @Override
-    public IColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
+    public DbColumnType processTypeConvert(GlobalConfig globalConfig, String fieldType) {
         String t = fieldType.toLowerCase();
         if (t.contains("char")) {
             return DbColumnType.STRING;
