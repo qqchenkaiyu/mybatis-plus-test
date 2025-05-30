@@ -9,5 +9,19 @@ spring:
     url: jdbc:mysql:///world?serverTimezone=GMT%2B8
     username: root
     password: 123456
-mybatis-plus:
-  mapper-locations: com/baomidou/ant/blog/mapper/xml/*
+
+
+
+#xxl-job
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:8081/xxl-job-admin
+    executor:
+      appname: plus-job
+      ip:
+      port: 9010
+      logpath: xxl-job/log
+      logretentiondays: -1
+    accessToken: default_token
+
