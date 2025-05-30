@@ -33,6 +33,7 @@ services:
       - MYSQL_SERVICE_DB_NAME=nacos  # 指定数据库名称，需提前在 MySQL 创建
     ports:
       - "8848:8848"  # Nacos 控制台访问端口
+      - "9848:9848"
     depends_on:
       - mysql  # 确保 MySQL 先启动
 

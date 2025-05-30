@@ -13,7 +13,7 @@ import ${config.globalConfig.parent}.entity.${Entity};
 import com.baomidou.common.LogRequest;
 import com.baomidou.common.ApiResponse;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 /**
  * <p>
  * ${table.comment!} 前端控制器
