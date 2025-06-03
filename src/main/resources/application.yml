@@ -3,13 +3,19 @@ spring:
     name: mybatis-plus-test
   config:
     import:
-      - nacos:common-config.yaml  # 公共配置
+      - nacos:common.yml  # 公共配置
       - nacos:mybatis-plus-test.yml  # 应用特定配置
   cloud:
     nacos:
       config:
         server-addr: 127.0.0.1:8848
         file-extension: yaml
+    discovery:
+      server-addr: 127.0.0.1:8848    # Nacos 注册中心地址（与 config 相同）
+      group: DEFAULT_GROUP           # 注册中心分组（默认 DEFAULT_GROUP）
+      namespace: ""                  # 注册中心命名空间（空字符串表示默认）
+      service-name: ${spring.application.name}  # 注册的服务名（与 application.name 一致）
+      cluster-name: DEFAULT          # 集群名称（默认 DEFAULT）
 
 ## DataSource Config
 ##logging:

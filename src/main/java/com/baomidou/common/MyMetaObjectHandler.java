@@ -1,4 +1,4 @@
-package com.baomidou;
+package com.baomidou.common;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;

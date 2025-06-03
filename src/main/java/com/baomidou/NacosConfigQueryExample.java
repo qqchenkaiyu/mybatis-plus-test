@@ -1,28 +1,23 @@
-//package com.baomidou;
-//
-//import com.alibaba.nacos.api.NacosFactory;
-//import com.alibaba.nacos.api.config.ConfigService;
-//import com.alibaba.nacos.api.exception.NacosException;
-//import com.baomidou.mybatisplus.generator.AutoGenerator;
-//import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-//import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-//import com.zaxxer.hikari.HikariDataSource;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.context.event.ApplicationReadyEvent;
-//import org.springframework.context.event.EventListener;
-//import org.springframework.stereotype.Component;
-//
-//import java.sql.SQLException;
-//import java.util.Properties;
-//
-//@Component
-//@Slf4j
-//public class NacosConfigQueryExample {
-//
-//    @Autowired
-//    private HikariDataSource dataSource;
-//
+package com.baomidou;
+
+import com.zaxxer.hikari.HikariDataSource;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+@Slf4j
+public class NacosConfigQueryExample {
+
+    @Resource
+    private RestTemplate restTemplate1;
+    @Autowired
+    private HikariDataSource dataSource;
+    @Autowired
+    private DiscoveryClient discoveryClient;
 //
 //    @EventListener(ApplicationReadyEvent.class)
 //    public  void startGen() throws SQLException {
@@ -54,5 +49,19 @@
 //            e.printStackTrace();
 //        }
 //    }
+
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public  void startDiscover() throws SQLException {
+//        System.out.println("Registered services: " + discoveryClient.getServices());
+//        System.out.println("RestTemplate class: " + restTemplate1.getClass());
 //
-//}
+//        // 调用你的服务（假设你的服务有一个 `/hello` 接口）
+//        String result = restTemplate1.getForObject(
+//                "http://mybatis-plus-test/hello",  // 使用服务名调用（Nacos 负载均衡）
+//                String.class
+//        );
+//        System.out.println("Response from mybatis-plus-test: " + result);
+//    }
+
+}
