@@ -1,40 +1,56 @@
-# DataSource Config
-logging:
-  level:
-    com.baomidou.ant.blog.mapper: debug
-
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql:///world?serverTimezone=GMT%2B8
-    username: root
-    password: 123456
   application:
-    name: mybatis-plus-test  # 你的服务名（注册到 Nacos 的名称）
+    name: mybatis-plus-test
+  config:
+    import:
+      - nacos:common-config.yaml  # 公共配置
+      - nacos:mybatis-plus-test.yml  # 应用特定配置
   cloud:
     nacos:
-      discovery:
-        server-addr: localhost:8848  # Nacos 服务器地址（如果是远程，替换为实际 IP）
       config:
-        server-addr: localhost:8848  # Nacos 配置中心地址（如果使用配置中心）
-        file-extension: yml         # 配置文件格式（如 yaml、properties）
-        namespace: public            # 命名空间（默认 public）
-        group: DEFAULT_GROUP         # 分组（默认 DEFAULT_GROUP）
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
 
-
-
-#xxl-job
-xxl:
-  job:
-    admin:
-      addresses: http://localhost:8081/xxl-job-admin
-    executor:
-      appname: plus-job
-      ip:
-      port: 9010
-      logpath: xxl-job/log
-      logretentiondays: -1
-    accessToken: default_token
-
-
-
+## DataSource Config
+##logging:
+##  level:
+##    com.baomidou.ant.blog.mapper: debug
+#logging:
+#  level:
+#    com.alibaba.cloud.nacos: DEBUG  # Nacos 相关包
+#    org.springframework.cloud: DEBUG  # Spring Cloud 相关包
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql:///world?serverTimezone=GMT%2B8
+#    username: root
+#    password: 123456
+#  application:
+#    name: mybatis-plus-test  # 你的服务名（注册到 Nacos 的名称）
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: localhost:8848  # Nacos 服务器地址（如果是远程，替换为实际 IP）
+#      config:
+#        server-addr: localhost:8848  # Nacos 配置中心地址（如果使用配置中心）
+#        file-extension: yaml         # 配置文件格式（如 yaml、properties）
+#        namespace: public            # 命名空间（默认 public）
+#        group: DEFAULT_GROUP         # 分组（默认 DEFAULT_GROUP）
+#
+#
+#
+##xxl-job
+#xxl:
+#  job:
+#    admin:
+#      addresses: http://localhost:8081/xxl-job-admin
+#    executor:
+#      appname: plus-job
+#      ip:
+#      port: 9010
+#      logpath: xxl-job/log
+#      logretentiondays: -1
+#    accessToken: default_token
+#
+#
+#

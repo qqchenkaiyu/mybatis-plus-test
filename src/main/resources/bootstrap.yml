@@ -1,0 +1,11 @@
+# 新版不再需要配置
+#spring:
+#  application:
+#    name: mybatis-plus-test
+#  cloud:
+#    nacos:
+#      config:
+#        server-addr: 127.0.0.1:8849
+#        file-extension: yaml
+#        ext-config:
+#          -data-id: mybatis-plus-test1.yml
