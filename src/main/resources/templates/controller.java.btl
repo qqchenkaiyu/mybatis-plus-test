@@ -29,9 +29,9 @@ public class ${Entity}Controller {
     @Autowired
     ${Entity}Service ${entity}Service;
 
-    @GetMapping
+    @PostMapping("/page")
     @ApiOperation(value = "分页查询数据")
-    public ApiResponse queryAll(${Entity} obj,
+    public ApiResponse queryAll(@RequestBody ${Entity} obj,
                                 @RequestParam(defaultValue = "1") int pageNum,
                                 @RequestParam(defaultValue = "10") int pageSize) {
 
