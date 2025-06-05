@@ -24,14 +24,23 @@ services:
     image: docker.m.daocloud.io/nacos/nacos-server:v2.2.3  # 使用 DaoCloud 镜像源加速拉取
     container_name: rag-res-nacos
     environment:
-      - MODE=standalone  # 单机模式
+      - NACOS_AUTH_IDENTITY_KEY=2222
+      - NACOS_AUTH_IDENTITY_VALUE=2xxx
+      - NACOS_AUTH_TOKEN=VGhpc0lzTXlDdXN0b21TZWNyZXRLZXkwMTIzNDU2Nzg=
+      - PREFER_HOST_MODE=hostname
       - SPRING_DATASOURCE_PLATFORM=mysql
+      - MODE=standalone  # 单机模式
       - MYSQL_SERVICE_HOST=mysql  # 指定 MySQL 地址（与 Docker 服务名一致）
       - MYSQL_SERVICE_PORT=3306
       - MYSQL_SERVICE_USER=root
       - MYSQL_SERVICE_PASSWORD=123456
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
       - MYSQL_SERVICE_DB_NAME=nacos  # 指定数据库名称，需提前在 MySQL 创建
+
+
+
     ports:
+      - "8080:8080"
       - "8848:8848"  # Nacos 控制台访问端口
       - "9848:9848"
     depends_on:
